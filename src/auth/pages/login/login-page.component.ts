@@ -25,7 +25,7 @@ export class LoginPageComponent {
   protected readonly showPassword = signal(false);
 
   protected readonly loginForm = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
+    login: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
@@ -41,11 +41,11 @@ export class LoginPageComponent {
       return;
     }
 
-    const { email, password } = this.loginForm.getRawValue();
+    const { login, password } = this.loginForm.getRawValue();
     this.isSubmitting.set(true);
 
     this.authService
-      .login({ email, password })
+      .login({ login, password })
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {

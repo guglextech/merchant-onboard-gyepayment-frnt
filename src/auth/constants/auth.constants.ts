@@ -1,3 +1,9 @@
-export const AUTH_API_BASE_URL = 'https://gye-payment-service.onrender.com/api/v1';
-export const AUTH_LOGIN_ENDPOINT = `${AUTH_API_BASE_URL}/auth/login`;
-export const AUTH_SESSION_STORAGE_KEY = 'gye-auth-session';
+import {
+  API_BASE_URL as AUTH_API_BASE_URL,
+  API_PATHS,
+  AUTH_SESSION_STORAGE_KEY,
+} from '@core/api/api.constants';
+
+export { AUTH_API_BASE_URL, API_PATHS, AUTH_SESSION_STORAGE_KEY };
+
+export const AUTH_LOGIN_ENDPOINT = API_PATHS.adminAuthentication.login;

@@ -15,7 +15,7 @@ export const appRoutes: Route[] = [
     path: '',
     canActivate: [authGuard],
     loadChildren: () =>
-      import('./remote-entry/entry.routes').then((m) => m.remoteRoutes),
+      import('./dashboard/dashboard.routes').then((m) => m.dashboardRoutes),
   },
   { path: '**', redirectTo: '' },
 ];

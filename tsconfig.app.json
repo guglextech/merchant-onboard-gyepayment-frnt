@@ -9,6 +9,7 @@
       "node"
     ],
     "paths": {
+      "@core/*": ["src/core/*"],
       "@gye-payment-backoffice/auth": [
         "./src/lib/auth/index.ts"
       ]

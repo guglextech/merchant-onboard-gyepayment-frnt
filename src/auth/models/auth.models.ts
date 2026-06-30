@@ -1,37 +1,9 @@
-export interface MerchantModel {
-  id: string;
-  email: string;
-  businessName: string;
-  merchantCode: string;
-  status: string;
-}
+export type {
+  AuthSessionModel,
+  AuthTokensModel,
+  LoginCredentials,
+  LoginResponseModel,
+  MerchantModel,
+} from '@core/models/admin-authentication.model';
 
-export interface AuthTokensModel {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
-  accessTokenHash?: string;
-  refreshTokenHash?: string;
-}
-
-export interface LoginResponseModel {
-  merchant: MerchantModel;
-  tokens: AuthTokensModel;
-}
-
-export interface AuthSessionModel {
-  merchant: MerchantModel;
-  tokens: AuthTokensModel;
-  loggedInAt: string;
-}
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface ApiErrorResponse {
-  message: string | string[];
-  error: string;
-  statusCode: number;
-}
+export type { ApiErrorResponse } from '@core/api/api.types';

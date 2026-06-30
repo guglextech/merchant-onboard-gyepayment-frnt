@@ -1,6 +1,6 @@
 import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
 
-const AUTH_SESSION_STORAGE_KEY = 'gye-auth-session';
+import { AUTH_SESSION_STORAGE_KEY } from '@core/api/api.constants';
 export const AUTH_REQUIRED = new HttpContextToken<boolean>(() => false);
 
 interface SessionShape {

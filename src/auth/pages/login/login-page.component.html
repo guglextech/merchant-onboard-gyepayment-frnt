@@ -10,7 +10,7 @@
       >
         <img
           class="login-logo__img login-logo__img--hero"
-          src="/assets/guglex-logo.png"
+          src="/assets/guglex-logo.svg"
           width="168"
           height="34"
           alt="Guglex Technologies"
@@ -34,17 +34,17 @@
 
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
       <div class="form-field">
-        <label class="form-label" for="email">Email</label>
+        <label class="form-label" for="login">Login</label>
         <input
-          id="email"
-          type="email"
+          id="login"
+          type="text"
           class="form-control"
-          formControlName="email"
-          autocomplete="email"
-          placeholder="merchant@acme.com"
+          formControlName="login"
+          autocomplete="username"
+          placeholder="stev.com"
         />
-        @if (loginForm.controls.email.touched && loginForm.controls.email.invalid) {
-          <span class="field-error">Enter a valid email address.</span>
+        @if (loginForm.controls.login.touched && loginForm.controls.login.invalid) {
+          <span class="field-error">Enter your login.</span>
         }
       </div>
 
