@@ -17,6 +17,8 @@ export class PayrollChartComponent {
   @Input({ required: true }) planStats: PlanStat[] = [];
   @Input() successRate = 0;
   @Input() yearLabel = 'This Year';
+  @Input() panelTitle = 'Collections Overview';
+  @Input() rateLabel = 'Collection success rate';
 
   readonly r = 42;
   readonly circumference = 2 * Math.PI * this.r;

@@ -1,12 +1,13 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { map, startWith } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
 import {
-  DashboardApiResponse,
-  DashboardOverviewModel,
-  PlanStat,
-} from '../../models/dashboard-overview.model';
-import { FinancialService } from '@core/services/financial.service';
+  PlatformOverviewModel,
+  PlatformSummaryResponse,
+} from '@core/models/platform-summary.model';
+import { PlanStat } from '../../models/dashboard-overview.model';
+import { PlatformSummaryService } from '@core/services/platform-summary.service';
 import {
   DashboardSupportPanelComponent,
   PayrollChartComponent,
@@ -17,7 +18,6 @@ import {
   selector: 'app-overview-page',
   imports: [
     CommonModule,
-    DatePipe,
     SummaryCardsComponent,
     PayrollChartComponent,
     DashboardSupportPanelComponent,
@@ -26,30 +26,30 @@ import {
   styleUrl: './overview-page.component.scss',
 })
 export class OverviewPageComponent {
-  private readonly financialService = inject(FinancialService);
+  private readonly platformSummaryService = inject(PlatformSummaryService);
+  private readonly authService = inject(AuthService);
 
-  private readonly fallbackOverview: DashboardOverviewModel = {
-    greetingName: 'Merchant',
-    runPayrollLabel: 'Run Collection',
-    paymentYearLabel: `This Year - ${new Date().getFullYear()}`,
+  private readonly fallbackOverview: PlatformOverviewModel = {
+    greetingName: this.resolveGreetingName(),
+    paymentYearLabel: `Platform · ${new Date().getFullYear()}`,
     summaryCards: [
-      { icon: 'bi-cash-stack', label: 'Total Collected', value: 'GHS 0.00', meta: 'All time' },
-      { icon: 'bi-wallet2', label: 'Available Balance', value: 'GHS 0.00', meta: 'After fees' },
-      { icon: 'bi-people', label: 'Active Plans', value: '0', meta: '0 total plans' },
+      { icon: 'bi-shop', label: 'Merchants', value: '0', meta: '0 active · 0 pending KYB' },
+      { icon: 'bi-people', label: 'Customers', value: '0', meta: 'Across all merchants' },
+      { icon: 'bi-cash-stack', label: 'Gross Volume', value: 'GHS 0.00', meta: 'Platform-wide' },
+      { icon: 'bi-graph-up-arrow', label: 'Platform Revenue', value: 'GHS 0.00', meta: 'Fees collected' },
+      { icon: 'bi-bank', label: 'Total Settled', value: 'GHS 0.00', meta: 'Paid out to merchants' },
+      { icon: 'bi-wallet2', label: 'Outstanding', value: 'GHS 0.00', meta: 'Awaiting settlement' },
     ],
-    recentItems: [],
     planStats: [
       { label: 'Active', count: 0, color: '#22c55e' },
-      { label: 'Paused', count: 0, color: '#f97316' },
-      { label: 'Completed', count: 0, color: '#3b82f6' },
       { label: 'Defaulted', count: 0, color: '#ef4444' },
-      { label: 'Cancelled', count: 0, color: '#9ca3af' },
     ],
-    successRate: 0,
+    settlementRate: 0,
+    breakdown: [],
   };
 
-  readonly overview$ = this.financialService.getOverview().pipe(
-    map((data) => this.mapApiResponse(data)),
+  readonly overview$ = this.platformSummaryService.getSummary().pipe(
+    map((data) => this.mapSummaryResponse(data)),
     startWith(this.fallbackOverview)
   );
 
@@ -71,55 +71,88 @@ export class OverviewPageComponent {
     }).format(new Date());
   }
 
-  private formatGhs(value: number): string {
-    return `GHS ${value.toLocaleString('en-GH', {
+  formatGhs(value: number | string): string {
+    return `GHS ${Number(value).toLocaleString('en-GH', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`;
   }
 
-  private mapApiResponse(data: DashboardApiResponse | null): DashboardOverviewModel {
+  formatEntryType(entryType: string): string {
+    return entryType
+      .split('_')
+      .map((part) => part.charAt(0) + part.slice(1).toLowerCase())
+      .join(' ');
+  }
+
+  private resolveGreetingName(): string {
+    return (
+      this.authService.getSession()?.admin.username ??
+      this.authService.getSession()?.admin.email ??
+      'Admin'
+    );
+  }
+
+  private mapSummaryResponse(data: PlatformSummaryResponse | null): PlatformOverviewModel {
     if (!data) return this.fallbackOverview;
 
-    const { financial, plans, collections, recent } = data;
+    const { merchants, customers, plans, financials } = data;
+    const settlementRate =
+      financials.grossVolume > 0
+        ? Math.round((financials.totalSettled / financials.grossVolume) * 100)
+        : 0;
 
     const summaryCards = [
       {
-        icon: 'bi-cash-stack',
-        label: 'Total Collected',
-        value: this.formatGhs(financial.totalCollected),
-        meta: `GHS ${financial.totalFees.toFixed(2)} in fees`,
-      },
-      {
-        icon: 'bi-wallet2',
-        label: 'Available Balance',
-        value: this.formatGhs(financial.availableBalance),
-        meta: `GHS ${financial.totalSettled.toFixed(2)} settled`,
+        icon: 'bi-shop',
+        label: 'Merchants',
+        value: String(merchants.total),
+        meta: `${merchants.active} active · ${merchants.pendingKyb} pending KYB`,
       },
       {
         icon: 'bi-people',
-        label: 'Active Plans',
-        value: String(plans.active),
-        meta: `${plans.total} total · ${plans.defaulted} defaulted`,
+        label: 'Customers',
+        value: String(customers.total),
+        meta: 'Across all merchants',
+      },
+      {
+        icon: 'bi-cash-stack',
+        label: 'Gross Volume',
+        value: this.formatGhs(financials.grossVolume),
+        meta: `${financials.breakdown.length} entry type${financials.breakdown.length !== 1 ? 's' : ''}`,
+      },
+      {
+        icon: 'bi-graph-up-arrow',
+        label: 'Platform Revenue',
+        value: this.formatGhs(financials.totalRevenue),
+        meta: `GHS ${financials.totalReversals.toFixed(2)} reversals`,
+      },
+      {
+        icon: 'bi-bank',
+        label: 'Total Settled',
+        value: this.formatGhs(financials.totalSettled),
+        meta: 'Paid out to merchants',
+      },
+      {
+        icon: 'bi-wallet2',
+        label: 'Outstanding',
+        value: this.formatGhs(financials.totalOutstanding),
+        meta: 'Awaiting settlement',
       },
     ];
 
     const planStats: PlanStat[] = [
       { label: 'Active', count: plans.active, color: '#22c55e' },
-      { label: 'Paused', count: plans.paused, color: '#f97316' },
-      { label: 'Completed', count: plans.completed, color: '#3b82f6' },
       { label: 'Defaulted', count: plans.defaulted, color: '#ef4444' },
-      { label: 'Cancelled', count: plans.cancelled, color: '#9ca3af' },
     ];
 
     return {
-      greetingName: 'Merchant',
-      runPayrollLabel: 'Run Collection',
-      paymentYearLabel: `This Year - ${new Date().getFullYear()}`,
+      greetingName: this.resolveGreetingName(),
+      paymentYearLabel: `Platform · ${new Date().getFullYear()}`,
       summaryCards,
-      recentItems: recent,
       planStats,
-      successRate: collections.successRate,
+      settlementRate,
+      breakdown: financials.breakdown ?? [],
     };
   }
 }

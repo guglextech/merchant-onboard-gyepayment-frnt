@@ -1,0 +1,265 @@
+.review-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+}
+
+.review-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #1e4962;
+  flex-shrink: 0;
+}
+
+.review-name {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2d38;
+}
+
+.review-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.detail-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8d9aa6;
+}
+
+.detail-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2d3d47;
+  word-break: break-word;
+}
+
+.section-title {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6f7f8a;
+}
+
+.doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.doc-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #e8edf1;
+  border-radius: 8px;
+  background: #f8fafb;
+
+  span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6f7f8a;
+  }
+
+  strong {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1f2d38;
+    text-align: right;
+  }
+}
+
+.doc-list__item--missing {
+  border-color: #fde8e8;
+  background: #fffafa;
+
+  strong {
+    color: #b91c1c;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: #eef1f4;
+  margin: 1.25rem 0;
+}
+
+.decision-note {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #fff7ed;
+  color: #c2410c;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.decision-alert {
+  margin-bottom: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.decision-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6f7f8a;
+}
+
+.form-control {
+  width: 100%;
+  border: 1px solid #d8e0e6;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.8125rem;
+  color: #2d3d47;
+  background: #fff;
+  outline: none;
+  resize: vertical;
+  min-height: 5rem;
+
+  &:focus {
+    border-color: #3b82c4;
+    box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.12);
+  }
+}
+
+.field-error {
+  font-size: 0.72rem;
+  color: #b91c1c;
+}
+
+.notify-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #4a5c67;
+  cursor: pointer;
+
+  input {
+    width: 0.95rem;
+    height: 0.95rem;
+    accent-color: #1e4962;
+  }
+}
+
+.drawer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  width: 100%;
+}
+
+.btn-primary,
+.btn-ghost,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.62rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  border: 0;
+  background: #1e4962;
+  color: #ffffff;
+
+  &:hover:not(:disabled) {
+    background: #163a50;
+  }
+}
+
+.btn-ghost {
+  border: 1px solid #d4dde4;
+  background: transparent;
+  color: #3a4e5a;
+
+  &:hover:not(:disabled) {
+    background: #f4f7f9;
+  }
+}
+
+.btn-danger {
+  border: 0;
+  background: #dc2626;
+  color: #ffffff;
+
+  &:hover:not(:disabled) {
+    background: #b91c1c;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

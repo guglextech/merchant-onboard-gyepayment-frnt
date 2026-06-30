@@ -1,6 +1,6 @@
 <article class="chart-panel">
   <div class="panel-head">
-    <h3>Collections Overview</h3>
+    <h3>{{ panelTitle }}</h3>
     <p>{{ yearLabel }}</p>
   </div>
 
@@ -56,9 +56,9 @@
             [attr.stroke-dashoffset]="successRingOffset"
           />
           <text x="60" y="55" text-anchor="middle" class="rate-count">{{ successRate }}%</text>
-          <text x="60" y="69" text-anchor="middle" class="rate-sub">Success</text>
+          <text x="60" y="69" text-anchor="middle" class="rate-sub">Settled</text>
         </svg>
-        <p class="rate-label">Collection success rate</p>
+        <p class="rate-label">{{ rateLabel }}</p>
       </div>
     </div>
   </div>

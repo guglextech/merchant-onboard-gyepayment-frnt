@@ -1,0 +1,98 @@
+<section class="panel">
+  <header class="panel-head">
+    <div class="panel-head__intro">
+      <h2>Merchant Directory</h2>
+      <p>Refine results by status, city, or onboarding period.</p>
+    </div>
+
+    <button type="button" class="panel-head__action" (click)="createMerchant.emit()">
+      <i class="bi bi-plus-lg" aria-hidden="true"></i>
+      Add Merchant
+    </button>
+  </header>
+
+  <div class="filter-bar">
+    <div class="filter-bar__fields">
+      <div class="filter-field">
+        <label class="filter-field__label" for="merchant-status-filter">Status</label>
+        <div class="filter-field__control">
+          <select
+            id="merchant-status-filter"
+            class="filter-input filter-input--select"
+            [value]="selectedStatus"
+            (change)="onStatusChange($any($event.target).value)"
+          >
+            @for (option of statusFilterOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-field">
+        <label class="filter-field__label" for="merchant-city-filter">City</label>
+        <div class="filter-field__control filter-field__control--icon">
+          <i class="bi bi-geo-alt" aria-hidden="true"></i>
+          <input
+            id="merchant-city-filter"
+            type="text"
+            class="filter-input"
+            placeholder="e.g. Accra"
+            [value]="cityFilter"
+            (change)="onCityChange($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="filter-field filter-field--range">
+        <span class="filter-field__label">Onboarded between</span>
+        <div class="filter-range">
+          <input
+            id="merchant-from-date"
+            type="date"
+            class="filter-input filter-input--date"
+            [value]="fromDate"
+            (change)="onFromDateChange($any($event.target).value)"
+            aria-label="From date"
+          />
+          <span class="filter-range__sep" aria-hidden="true">–</span>
+          <input
+            id="merchant-to-date"
+            type="date"
+            class="filter-input filter-input--date"
+            [value]="toDate"
+            (change)="onToDateChange($any($event.target).value)"
+            aria-label="To date"
+          />
+        </div>
+      </div>
+    </div>
+
+    @if (hasActiveFilters) {
+      <button type="button" class="filter-bar__clear" (click)="clearFilters()">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+        Clear filters
+      </button>
+    }
+  </div>
+
+  <div class="merchant-table">
+    <lib-data-table
+      [columns]="columns"
+      [rows]="allRows()"
+      [rowActions]="rowActions"
+      [loading]="loading()"
+      [trackByKey]="'id'"
+      [searchable]="true"
+      [serverSide]="true"
+      [totalItems]="totalMerchants()"
+      [initialPageSize]="tablePageSize"
+      [pageSizeOptions]="tablePageSizeOptions"
+      [searchPlaceholder]="'Search by name, email, or code...'"
+      [emptyMessage]="'No merchants found for the selected filters.'"
+      (queryChange)="onTableQueryChange($event)"
+      (rowAction)="onRowAction($event)"
+      (rowClick)="onRowClick($event)"
+    />
+  </div>
+</section>

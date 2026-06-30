@@ -1,18 +1,17 @@
 import { Route } from '@angular/router';
 import { DashboardShellComponent } from './components/dashboard-shell/dashboard-shell.component';
-import { CollectionsPageComponent } from './pages/collections/collections-page.component';
+import { KybSetupPageComponent } from './pages/kyb-setup/kyb-setup-page.component';
+import { MerchantsPageComponent } from './pages/merchants/merchants-page.component';
 import { OverviewPageComponent } from './pages/overview/overview-page.component';
 import { PlanSetupPageComponent } from './pages/plan-setup/plan-setup-page.component';
-import { ReportsPageComponent } from './pages/reports/reports-page.component';
-import { SettlementsPageComponent } from './pages/settlements/settlements-page.component';
 import { SettingsPageComponent } from './pages/settings/settings-page.component';
-import { YourPeoplePageComponent } from './pages/your-people/your-people-page.component';
+import { CustomerManagementPageComponent } from './pages/customer-management/customer-management-page.component';
 import { DashboardNavItem } from './types/dashboard.types';
 
 export const DASHBOARD_NAV_ITEMS: DashboardNavItem[] = [
   {
     label: 'Platform',
-    route: 'platform-overview',
+    route: 'overview',
     title: 'Platform Overview',
     description: 'View BNPL performance, balances, and pending actions.',
     icon: 'bi-globe',
@@ -32,11 +31,11 @@ export const DASHBOARD_NAV_ITEMS: DashboardNavItem[] = [
     icon: 'bi-people',
   },
   {
-    label: 'Collections',
-    route: 'collections',
-    title: 'Collections',
-    description: 'View collection performance, balances, and pending actions.',
-    icon: 'bi-wallet2',
+    label: 'Customers',
+    route: 'customer-management',
+    title: 'Customers',
+    description: 'View customer performance, balances, and pending actions.',
+    icon: 'bi-people',
   },
   {
     label: 'Reports',
@@ -62,29 +61,24 @@ const dashboardPageRoutes: Route[] = [
     data: { title: 'Overview' },
   },
   {
-    path: 'settlements',
-    component: SettlementsPageComponent,
-    data: { title: 'Settlements' },
+    path: 'kyb-setup',
+    component: KybSetupPageComponent,
+    data: { title: 'KYB Setup' },
   },
   {
-    path: 'collections',
-    component: CollectionsPageComponent,
-    data: { title: 'Collections' },
+    path: 'merchants',
+    component: MerchantsPageComponent,
+    data: { title: 'Merchants' },
   },
   {
-    path: 'your-people',
-    component: YourPeoplePageComponent,
-    data: { title: 'Your People' },
+    path: 'customer-management',
+    component: CustomerManagementPageComponent,
+    data: { title: 'Customers' },
   },
   {
     path: 'plan-setup',
     component: PlanSetupPageComponent,
     data: { title: 'Plan Setup' },
-  },
-  {
-    path: 'reports',
-    component: ReportsPageComponent,
-    data: { title: 'Reports' },
   },
   {
     path: 'settings',

@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.page-content {
+  padding: 1.15rem;
+  min-height: min-content;
+}
+
+.page-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page-hero h1 {
+  margin: 0;
+  color: #1f2d38;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.page-hero p {
+  margin: 0.35rem 0 0;
+  color: #83929d;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 960px) {
+  .page-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

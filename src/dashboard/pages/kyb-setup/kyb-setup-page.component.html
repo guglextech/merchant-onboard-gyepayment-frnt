@@ -1,0 +1,20 @@
+<div class="page-content">
+  <header class="page-hero">
+    <div>
+      <h1>KYB Setup</h1>
+      <p>Review pending merchant verification submissions and document completeness.</p>
+    </div>
+  </header>
+
+  <app-kyb-pending-directory
+    [reloadToken]="reloadToken()"
+    (reviewApplication)="openReview($event)"
+  />
+</div>
+
+<app-kyb-review-drawer
+  [isOpen]="reviewOpen()"
+  [application]="selectedApplication()"
+  (closed)="closeReview()"
+  (decisionSubmitted)="onDecisionSubmitted()"
+/>

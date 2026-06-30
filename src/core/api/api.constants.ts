@@ -9,11 +9,19 @@ export const API_PATHS = {
     login: `${API_BASE_URL}/admin/auth/login`,
     password: `${API_BASE_URL}/admin/auth/password`,
   },
+  admin: {
+    summary: `${API_BASE_URL}/admin/summary`,
+    kyb: {
+      root: `${API_BASE_URL}/admin/kyb`,
+      pending: `${API_BASE_URL}/admin/kyb/pending`,
+    },
+  },
   kyb: {
     root: `${API_BASE_URL}/kyb`,
   },
   merchants: {
-    root: `${API_BASE_URL}/merchants`,
+    root: `${API_BASE_URL}/admin/merchants`,
+    register: `${API_BASE_URL}/merchants/register`,
     overview: `${API_BASE_URL}/dashboard/overview`,
   },
   collectionsOversight: {

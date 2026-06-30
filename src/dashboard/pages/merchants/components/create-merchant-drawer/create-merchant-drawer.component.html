@@ -1,0 +1,147 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="Add Merchant"
+  subtitle="Register a new merchant account on the platform."
+  width="520px"
+  (closed)="close()"
+>
+  <form [formGroup]="form" drawer-body (ngSubmit)="submit()">
+    @if (submitError(); as error) {
+      <div class="form-alert" role="alert">{{ error }}</div>
+    }
+
+    <h3 class="sub-title">Business details</h3>
+
+    <div class="row g-3 mb-1">
+      <div class="col-12">
+        <label for="businessName" class="form-label">
+          Business name <span class="required">*</span>
+        </label>
+        <input
+          id="businessName"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.businessName.invalid && form.controls.businessName.touched"
+          formControlName="businessName"
+          placeholder="e.g. Acme Store"
+          autocomplete="organization"
+        />
+        @if (fieldError('businessName')) {
+          <div class="invalid-feedback">{{ fieldError('businessName') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="merchantEmail" class="form-label">
+          Email <span class="required">*</span>
+        </label>
+        <input
+          id="merchantEmail"
+          type="email"
+          class="form-control"
+          [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched"
+          formControlName="email"
+          placeholder="merchant@acme.com"
+          autocomplete="email"
+        />
+        @if (fieldError('email')) {
+          <div class="invalid-feedback">{{ fieldError('email') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="merchantPhone" class="form-label">
+          Phone <span class="required">*</span>
+        </label>
+        <input
+          id="merchantPhone"
+          type="tel"
+          class="form-control"
+          [class.is-invalid]="form.controls.phone.invalid && form.controls.phone.touched"
+          formControlName="phone"
+          placeholder="233241234567"
+          autocomplete="tel"
+          inputmode="numeric"
+        />
+        @if (fieldError('phone')) {
+          <div class="invalid-feedback">{{ fieldError('phone') }}</div>
+        } @else {
+          <div class="form-text">12 digits starting with 233.</div>
+        }
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="sub-title">Location & access</h3>
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="merchantAddress" class="form-label">
+          Address <span class="required">*</span>
+        </label>
+        <input
+          id="merchantAddress"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.address.invalid && form.controls.address.touched"
+          formControlName="address"
+          placeholder="123 High Street"
+          autocomplete="street-address"
+        />
+        @if (fieldError('address')) {
+          <div class="invalid-feedback">{{ fieldError('address') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="merchantCity" class="form-label">
+          City <span class="required">*</span>
+        </label>
+        <input
+          id="merchantCity"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.city.invalid && form.controls.city.touched"
+          formControlName="city"
+          placeholder="Accra"
+          autocomplete="address-level2"
+        />
+        @if (fieldError('city')) {
+          <div class="invalid-feedback">{{ fieldError('city') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="merchantPassword" class="form-label">
+          Password <span class="required">*</span>
+        </label>
+        <input
+          id="merchantPassword"
+          type="password"
+          class="form-control"
+          [class.is-invalid]="form.controls.password.invalid && form.controls.password.touched"
+          formControlName="password"
+          placeholder="Minimum 8 characters"
+          autocomplete="new-password"
+        />
+        @if (fieldError('password')) {
+          <div class="invalid-feedback">{{ fieldError('password') }}</div>
+        }
+      </div>
+    </div>
+  </form>
+
+  <div drawer-footer class="drawer-actions">
+    <button type="button" class="btn-ghost" (click)="close()" [disabled]="submitting()">
+      Cancel
+    </button>
+    <button type="button" class="btn-primary" (click)="submit()" [disabled]="submitting()">
+      @if (submitting()) {
+        Creating…
+      } @else {
+        Create Merchant
+      }
+    </button>
+  </div>
+</app-side-drawer>

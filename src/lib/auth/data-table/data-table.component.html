@@ -1,6 +1,6 @@
 <div class="dt">  
-  <div class="dt__toolbar">
-    @if (searchable) {
+  @if (searchable) {
+    <div class="dt__toolbar">
       <div class="dt__search">
         <svg class="dt__search-icon" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11"/>
@@ -12,23 +12,8 @@
           (input)="onSearchTermChange($any($event.target).value)"
         />
       </div>
-    }
-
-    <div class="dt__toolbar-end">
-      <label class="dt__page-size">
-        <span>Rows per page</span>
-        <select
-          class="dt__select"
-          [value]="pageSize"
-          (change)="onPageSizeChange($any($event.target).value)"
-        >
-          @for (opt of pageSizeOptions; track opt) {
-            <option [value]="opt">{{ opt }}</option>
-          }
-        </select>
-      </label>
     </div>
-  </div>
+  }
 
   <div class="dt__scroll">
     <table class="dt__table">
@@ -198,7 +183,21 @@
       }
     </span>
 
-    <nav class="dt__pagination" aria-label="Table pagination">
+    <div class="dt__footer-end">
+      <label class="dt__page-size">
+        <span>Rows per page</span>
+        <select
+          class="dt__select"
+          [value]="pageSize"
+          (change)="onPageSizeChange($any($event.target).value)"
+        >
+          @for (opt of pageSizeOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </label>
+
+      <nav class="dt__pagination" aria-label="Table pagination">
       <button
         class="dt__page-btn"
         type="button"
@@ -235,5 +234,6 @@
         </svg>
       </button>
     </nav>
+    </div>
   </div>
 </div>

@@ -1,0 +1,122 @@
+.panel {
+  background: #ffffff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 0.9rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.panel-head__intro h2 {
+  margin: 0;
+  color: #1f2d38;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.panel-head__intro p {
+  margin: 0.25rem 0 0;
+  color: #8d9aa6;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.panel-head__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #e8edf1;
+  border-radius: 8px;
+  background: #f8fafb;
+}
+
+.panel-head__stat-value {
+  color: #1f2d38;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.panel-head__stat-label {
+  margin-top: 0.2rem;
+  color: #8d9aa6;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.kyb-table {
+  ::ng-deep {
+    lib-data-table {
+      --dt-border: #e8edf1;
+      --dt-row-sep: #f0f3f6;
+      --dt-row-hover: #f8fafb;
+      --dt-header-text: #7b8794;
+      --dt-body-text: #2d3d47;
+      --dt-muted: #8d9aa6;
+      --dt-radius: 8px;
+    }
+
+    .dt {
+      border: none;
+      background: transparent;
+    }
+
+    .dt__toolbar {
+      padding: 0 0 0.85rem;
+      border-bottom: none;
+    }
+
+    .dt__th {
+      padding: 0.65rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7b8794;
+    }
+
+    .dt__td {
+      padding: 0.82rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #3a4e5a;
+    }
+
+    .dt__cell-text {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #1f2d38;
+    }
+
+    .dt-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .dt__footer {
+      padding: 0.85rem 0 0;
+      border-top: 1px solid #eef1f4;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .panel-head {
+    flex-direction: column;
+  }
+
+  .panel-head__stat {
+    align-items: flex-start;
+  }
+}

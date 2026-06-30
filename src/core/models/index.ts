@@ -45,8 +45,31 @@ export type {
   SummaryCard,
 } from './financial.model';
 
-export type { KybProfile, KybStatus, KybSubmissionPayload } from './kyb.model';
+export type {
+  KybDecision,
+  KybDecisionPayload,
+  KybDecisionResponse,
+  KybProfile,
+  KybStatus,
+  KybSubmissionPayload,
+  PendingKybApplication,
+} from './kyb.model';
 
-export type { MerchantRecord } from './merchants.model';
+export type {
+  CreateMerchantPayload,
+  MerchantDetailResponse,
+  MerchantRecord,
+  MerchantsQuery,
+} from './merchants.model';
+
+export type {
+  FinancialBreakdownEntry,
+  PlatformOverviewModel,
+  PlatformSummaryCustomers,
+  PlatformSummaryFinancials,
+  PlatformSummaryMerchants,
+  PlatformSummaryPlans,
+  PlatformSummaryResponse,
+} from './platform-summary.model';
 
 export type { ApiKeyResponse } from './system-control.model';

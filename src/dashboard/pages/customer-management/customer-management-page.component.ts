@@ -8,17 +8,17 @@ import {
 } from './components';
 
 @Component({
-  selector: 'app-your-people-page',
+  selector: 'app-customer-management-page',
   imports: [
     CustomerDirectoryComponent,
     CreateCustomerDrawerComponent,
     CreatePlanDrawerComponent,
     CustomerProfileDrawerComponent,
   ],
-  templateUrl: './your-people-page.component.html',
-  styleUrl: './your-people-page.component.scss',
+  templateUrl: './customer-management-page.component.html',
+  styleUrl: './customer-management-page.component.scss',
 })
-export class YourPeoplePageComponent {
+export class CustomerManagementPageComponent {
   readonly createCustomerOpen = signal(false);
   readonly createPlanOpen = signal(false);
   readonly profileOpen = signal(false);

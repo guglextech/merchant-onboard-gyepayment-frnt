@@ -1,0 +1,26 @@
+<section class="panel">
+  <header class="panel-head">
+    <div class="panel-head__intro">
+      <h2>Pending KYB Applications</h2>
+      <p>Merchants awaiting identity and business verification.</p>
+    </div>
+  </header>
+
+  <div class="kyb-table">
+    <lib-data-table
+      [columns]="columns"
+      [rows]="rows()"
+      [rowActions]="rowActions"
+      [loading]="loading()"
+      [trackByKey]="'id'"
+      [searchable]="true"
+      [serverSide]="false"
+      [initialPageSize]="tablePageSize"
+      [pageSizeOptions]="tablePageSizeOptions"
+      [searchPlaceholder]="'Search by business name, email, or phone...'"
+      [emptyMessage]="'No pending KYB applications at the moment.'"
+      (rowAction)="onRowAction($event)"
+      (rowClick)="onRowClick($event)"
+    />
+  </div>
+</section>

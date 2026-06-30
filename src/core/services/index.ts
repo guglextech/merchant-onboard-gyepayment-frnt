@@ -4,6 +4,7 @@ export { CustomerManagementService } from './customer-management.service';
 export { FinancialService } from './financial.service';
 export { KybService } from './kyb.service';
 export { MerchantsService } from './merchants.service';
+export { PlatformSummaryService } from './platform-summary.service';
 export { SystemControlService } from './system-control.service';
 
 export type {
@@ -50,8 +51,31 @@ export type {
   SummaryCard,
 } from '../models/financial.model';
 
-export type { KybProfile, KybStatus, KybSubmissionPayload } from '../models/kyb.model';
+export type {
+  KybDecision,
+  KybDecisionPayload,
+  KybDecisionResponse,
+  KybProfile,
+  KybStatus,
+  KybSubmissionPayload,
+  PendingKybApplication,
+} from '../models/kyb.model';
 
-export type { MerchantRecord } from '../models/merchants.model';
+export type {
+  CreateMerchantPayload,
+  MerchantDetailResponse,
+  MerchantRecord,
+  MerchantsQuery,
+} from '../models/merchants.model';
+
+export type {
+  FinancialBreakdownEntry,
+  PlatformOverviewModel,
+  PlatformSummaryCustomers,
+  PlatformSummaryFinancials,
+  PlatformSummaryMerchants,
+  PlatformSummaryPlans,
+  PlatformSummaryResponse,
+} from '../models/platform-summary.model';
 
 export type { ApiKeyResponse } from '../models/system-control.model';

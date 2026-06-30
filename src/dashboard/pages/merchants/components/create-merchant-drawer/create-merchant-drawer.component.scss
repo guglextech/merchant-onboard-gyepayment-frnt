@@ -1,0 +1,38 @@
+@use '../../../customer-management/styles/drawer-shared';
+
+.form-alert {
+  margin-bottom: 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.form-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4a5c67;
+}
+
+.form-text {
+  font-size: 0.72rem;
+  color: #8d9aa6;
+}
+
+.form-control {
+  font-size: 0.8125rem;
+}
+
+.drawer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  width: 100%;
+}

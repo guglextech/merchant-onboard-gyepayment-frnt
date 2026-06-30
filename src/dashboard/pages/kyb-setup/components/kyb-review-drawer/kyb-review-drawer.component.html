@@ -1,0 +1,118 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="KYB Review"
+  subtitle="Verify merchant identity and submit a KYC decision."
+  width="560px"
+  (closed)="close()"
+>
+  <div drawer-body class="review-body">
+    @if (application(); as data) {
+      <div class="review-identity">
+        <div class="review-avatar">{{ getInitials(data.businessName) }}</div>
+        <div>
+          <h3 class="review-name">{{ data.businessName }}</h3>
+          <span class="review-badge">
+            {{ getKybCompleteness(data) }}/3 documents provided
+          </span>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
+          <span class="detail-value">{{ data.email }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Phone</span>
+          <span class="detail-value">{{ formatPhone(data.phone) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Submitted</span>
+          <span class="detail-value">{{ data.createdAt | date: 'd MMM y, HH:mm' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Merchant ID</span>
+          <span class="detail-value">{{ data.id }}</span>
+        </div>
+      </div>
+
+      <h4 class="section-title">Verification documents</h4>
+      <ul class="doc-list">
+        <li [class.doc-list__item--missing]="docStatus(data.ghanaCardNumber) === 'missing'">
+          <span>Ghana Card</span>
+          <strong>{{ data.ghanaCardNumber ?? 'Not provided' }}</strong>
+        </li>
+        <li [class.doc-list__item--missing]="docStatus(data.tinNumber) === 'missing'">
+          <span>TIN</span>
+          <strong>{{ data.tinNumber ?? 'Not provided' }}</strong>
+        </li>
+        <li [class.doc-list__item--missing]="docStatus(data.businessRegNumber) === 'missing'">
+          <span>Business registration</span>
+          <strong>{{ data.businessRegNumber ?? 'Not provided' }}</strong>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <h4 class="section-title">KYC decision</h4>
+      @if (!canApprove(data)) {
+        <p class="decision-note">
+          Approval requires all three documents. You can still reject incomplete submissions.
+        </p>
+      }
+
+      @if (errorMessage(); as message) {
+        <div class="decision-alert" role="alert">{{ message }}</div>
+      }
+
+      <form class="decision-form" [formGroup]="decisionForm" (ngSubmit)="$event.preventDefault()">
+        <div class="form-field">
+          <label class="form-label" for="kyb-reason">Decision reason</label>
+          <textarea
+            id="kyb-reason"
+            class="form-control"
+            rows="3"
+            formControlName="reason"
+            placeholder="Explain why this application is approved or rejected"
+          ></textarea>
+          @if (
+            decisionForm.controls.reason.touched && decisionForm.controls.reason.invalid
+          ) {
+            <span class="field-error">Enter a reason of at least 3 characters.</span>
+          }
+        </div>
+
+        <label class="notify-toggle">
+          <input type="checkbox" formControlName="notifyMerchant" />
+          <span>Notify merchant by email</span>
+        </label>
+      </form>
+    }
+  </div>
+
+  <div drawer-footer class="drawer-actions">
+    <button type="button" class="btn-ghost" [disabled]="submitting()" (click)="close()">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn-danger"
+      [disabled]="submitting() || !application()"
+      (click)="submitDecision('REJECT')"
+    >
+      Reject
+    </button>
+    <button
+      type="button"
+      class="btn-primary"
+      [disabled]="submitting() || !application() || !canApprove(application()!)"
+      (click)="submitDecision('APPROVE')"
+    >
+      @if (submitting()) {
+        Submitting…
+      } @else {
+        Approve
+      }
+    </button>
+  </div>
+</app-side-drawer>

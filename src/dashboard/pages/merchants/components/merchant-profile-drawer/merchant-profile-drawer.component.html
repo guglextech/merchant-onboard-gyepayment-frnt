@@ -1,0 +1,98 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="Merchant Profile"
+  subtitle="Business details, KYB status, and settlement settings."
+  width="580px"
+  (closed)="close()"
+>
+  <div drawer-body class="profile-body">
+    @if (loading()) {
+      <div class="profile-loading">
+        <span class="spinner spinner--dark"></span>
+        <p>Loading profile…</p>
+      </div>
+    }
+
+    @if (!loading() && error(); as errorMessage) {
+      <div class="profile-error">
+        <p>{{ errorMessage }}</p>
+      </div>
+    }
+
+    @if (!loading() && merchant(); as data) {
+      <div class="profile-identity">
+        <div class="profile-avatar">{{ getInitials(data.businessName) }}</div>
+        <div class="profile-identity__info">
+          <h3 class="profile-name">{{ data.businessName }}</h3>
+          <div class="profile-badges">
+            <span class="prof-badge" [class]="statusBadge(data.status)">{{ data.status }}</span>
+            @if (data.kybVerifiedAt) {
+              <span class="prof-badge prof-badge--active">KYB Verified</span>
+            } @else {
+              <span class="prof-badge prof-badge--pending">KYB Pending</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Merchant code</span>
+          <span class="detail-value">{{ data.merchantCode }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
+          <span class="detail-value">{{ data.email }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Phone</span>
+          <span class="detail-value">{{ formatPhone(data.phone) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Available balance</span>
+          <span class="detail-value">{{ formatMoney(data.availableBalance) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Platform fee</span>
+          <span class="detail-value">{{ formatPlatformFeeRate(data.platformFeeRate) }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Max active plans</span>
+          <span class="detail-value">{{ data.maxActivePlansPerCustomer }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Address</span>
+          <span class="detail-value">{{ data.address || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">City</span>
+          <span class="detail-value">{{ data.city || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Ghana Card</span>
+          <span class="detail-value">{{ data.ghanaCardNumber ?? '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">TIN</span>
+          <span class="detail-value">{{ data.tinNumber ?? '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Business reg. no.</span>
+          <span class="detail-value">{{ data.businessRegNumber ?? '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Auto settle</span>
+          <span class="detail-value">{{ data.autoSettleEnabled ? 'Enabled' : 'Disabled' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Joined</span>
+          <span class="detail-value">{{ data.createdAt | date: 'd MMM y' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">KYB verified</span>
+          <span class="detail-value">{{ formatKybVerifiedAt(data.kybVerifiedAt) }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</app-side-drawer>

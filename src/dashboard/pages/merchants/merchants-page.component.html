@@ -1,0 +1,26 @@
+<div class="page-content">
+  <header class="page-hero">
+    <div>
+      <h1>Merchants</h1>
+      <p>View and manage onboarded merchants, KYB status, and balances.</p>
+    </div>
+  </header>
+
+  <app-merchant-directory
+    [reloadToken]="directoryReloadToken()"
+    (viewProfile)="openProfile($event)"
+    (createMerchant)="openCreateMerchant()"
+  />
+</div>
+
+<app-create-merchant-drawer
+  [isOpen]="createMerchantOpen()"
+  (closed)="closeCreateMerchant()"
+  (merchantCreated)="onMerchantCreated()"
+/>
+
+<app-merchant-profile-drawer
+  [isOpen]="profileOpen()"
+  [merchantId]="profileMerchantId()"
+  (closed)="closeProfile()"
+/>

@@ -13,3 +13,27 @@ export interface KybSubmissionPayload {
   registrationNumber: string;
   documents?: string[];
 }
+
+export interface PendingKybApplication {
+  [key: string]: unknown;
+  id: string;
+  createdAt: string;
+  businessName: string;
+  email: string;
+  phone: string;
+  ghanaCardNumber: string | null;
+  tinNumber: string | null;
+  businessRegNumber: string | null;
+}
+
+export type KybDecision = 'APPROVE' | 'REJECT';
+
+export interface KybDecisionPayload {
+  decision: KybDecision;
+  reason: string;
+  notifyMerchant: boolean;
+}
+
+export interface KybDecisionResponse {
+  message?: string;
+}
