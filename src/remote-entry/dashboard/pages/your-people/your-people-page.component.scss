@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.page-content {
+  padding: 1.15rem;
+  min-height: min-content;
+}
+
+.page-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page-hero h1 {
+  margin: 0;
+  color: #1f2d38;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.page-hero p {
+  margin: 0.35rem 0 0;
+  color: #83929d;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.page-hero__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: 7px;
+  background: #1e4962;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.62rem 1.15rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+
+  i {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  &:hover:not(:disabled) {
+    background: #163a50;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 960px) {
+  .page-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

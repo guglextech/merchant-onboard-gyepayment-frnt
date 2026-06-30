@@ -1,0 +1,101 @@
+<div class="overview-page">
+  @if (overview$ | async; as overview) {
+    <header class="overview-hero">
+      <div class="overview-hero__copy">
+        <p class="overview-hero__meta">
+          <svg class="overview-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"
+            />
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+          </svg>
+          {{ currentTime }}
+        </p>
+        <h1>{{ greeting }}, {{ overview.greetingName }}</h1>
+        <p class="overview-hero__subtitle">
+          Track collections, settlements, and branch performance from one place.
+        </p>
+      </div>
+
+      <!-- <button type="button" class="overview-hero__action">
+        <svg class="overview-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
+          />
+        </svg>
+        {{ overview.runPayrollLabel }}
+      </button> -->
+    </header>
+
+    <div class="overview-grid">
+      <div class="overview-main">
+        <app-summary-cards [cards]="overview.summaryCards" />
+        <app-payroll-chart
+          [planStats]="overview.planStats"
+          [successRate]="overview.successRate"
+          [yearLabel]="overview.paymentYearLabel"
+        />
+
+        <section class="txn-table-card">
+          <div class="txn-table-head">
+            <h3>Recent Transactions</h3>
+            <span class="txn-table-count">{{ overview.recentItems.length }} record{{ overview.recentItems.length !== 1 ? 's' : '' }}</span>
+          </div>
+
+          @if (overview.recentItems.length === 0) {
+            <div class="txn-table-empty">
+              <svg viewBox="0 0 16 16" aria-hidden="true" class="txn-empty-icon">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0z"/>
+              </svg>
+              No recent transactions to display
+            </div>
+          } @else {
+            <div class="txn-table-wrap">
+              <table class="txn-table">
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Instalment</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of overview.recentItems; track item.id) {
+                    <tr>
+                      <td class="txn-td--customer">
+                        <span class="txn-avatar">{{ item.installment.plan.customer.fullName.charAt(0) }}</span>
+                        {{ item.installment.plan.customer.fullName }}
+                      </td>
+                      <td class="txn-td--instalment">
+                        {{ item.installment.installmentNo }} / {{ item.installment.plan.installmentCount }}
+                      </td>
+                      <td>
+                        <span
+                          class="txn-badge"
+                          [class.txn-badge--failed]="item.status === 'FAILED'"
+                          [class.txn-badge--success]="item.status === 'SUCCESS' || item.status === 'PAID'"
+                          [class.txn-badge--pending]="item.status === 'PENDING'"
+                        >{{ item.status }}</span>
+                      </td>
+                      <td class="txn-td--amount">GHS {{ item.amount }}</td>
+                      <td class="txn-td--date">{{ item.createdAt | date: 'd MMM y, HH:mm' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </section>
+      </div>
+
+      <app-dashboard-support-panel [recentItems]="[]" />
+    </div>
+  }
+</div>

@@ -1,0 +1,137 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="Add New Customer"
+  subtitle="Fill in the customer details to register them."
+  (closed)="close()"
+>
+  <form [formGroup]="form" drawer-body (ngSubmit)="submit()">
+    @if (submitError) {
+      <div class="alert alert-danger d-flex align-items-center gap-2 mb-3 py-2 px-3 form-alert">
+        {{ submitError }}
+      </div>
+    }
+
+    <h3 class="sub-title">Personal Information</h3>
+
+    <div class="row g-3 mb-1">
+      <div class="col-12">
+        <label for="fullName" class="form-label">
+          Full Name <span class="text-danger">*</span>
+        </label>
+        <input
+          id="fullName"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.get('fullName')?.invalid && form.get('fullName')?.touched"
+          formControlName="fullName"
+          placeholder="e.g. John Doe"
+          autocomplete="name"
+        />
+        @if (fieldError('fullName')) {
+          <div class="invalid-feedback">{{ fieldError('fullName') }}</div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+          formControlName="email"
+          placeholder="e.g. john.doe@example.com"
+          autocomplete="email"
+        />
+        @if (fieldError('email')) {
+          <div class="invalid-feedback">{{ fieldError('email') }}</div>
+        } @else {
+          <div class="form-text">Optional — used for payment receipts.</div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label for="ghanaCard" class="form-label">Ghana Card Number</label>
+        <input
+          id="ghanaCard"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.get('ghanaCardNumber')?.invalid && form.get('ghanaCardNumber')?.touched"
+          formControlName="ghanaCardNumber"
+          placeholder="GHA-123456789-0"
+          autocomplete="off"
+        />
+        @if (fieldError('ghanaCardNumber')) {
+          <div class="invalid-feedback">{{ fieldError('ghanaCardNumber') }}</div>
+        } @else {
+          <div class="form-text">Optional. Format: <code>GHA-123456789-0</code></div>
+        }
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="sub-title">Mobile Money</h3>
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="phone" class="form-label">
+          Phone Number <span class="text-danger">*</span>
+        </label>
+        <input
+          id="phone"
+          type="tel"
+          class="form-control"
+          [class.is-invalid]="form.get('phone')?.invalid && form.get('phone')?.touched"
+          formControlName="phone"
+          placeholder="233241234567"
+          autocomplete="tel"
+          inputmode="numeric"
+        />
+        @if (fieldError('phone')) {
+          <div class="invalid-feedback">{{ fieldError('phone') }}</div>
+        } @else {
+          <div class="form-text">12 digits starting with 233. Example: <code>233241234567</code></div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">
+          MoMo Channel <span class="text-danger">*</span>
+        </label>
+        <div class="channel-cards">
+          @for (ch of momoChannels; track ch.value) {
+            <label
+              class="channel-card"
+              [class.channel-card--selected]="form.get('momoChannel')?.value === ch.value"
+            >
+              <input type="radio" formControlName="momoChannel" [value]="ch.value" class="sr-only" />
+              <span class="channel-dot" [style.background]="ch.color"></span>
+              <span class="channel-label">{{ ch.label }}</span>
+              <svg
+                class="channel-check"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                [style.opacity]="form.get('momoChannel')?.value === ch.value ? 1 : 0"
+              >
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+              </svg>
+            </label>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div drawer-footer class="drawer-actions">
+    <button type="button" class="btn-ghost" (click)="close()" [disabled]="submitting">Cancel</button>
+    <button type="button" class="btn-primary" (click)="submit()" [disabled]="submitting">
+      @if (submitting) {
+        <span class="spinner"></span>
+        Creating...
+      } @else {
+        Create Customer
+      }
+    </button>
+  </div>
+</app-side-drawer>

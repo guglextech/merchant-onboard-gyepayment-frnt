@@ -1,0 +1,37 @@
+<div class="page-content">
+  <header class="page-hero">
+    <div>
+      <h1>Your People</h1>
+      <p>Manage customer records, MoMo channels, and payment history.</p>
+    </div>
+    <button type="button" class="page-hero__action" (click)="openCreateCustomer()">
+      <i class="bi bi-person-plus" aria-hidden="true"></i>
+      Add Customer
+    </button>
+  </header>
+
+  <app-customer-directory
+    [reloadToken]="directoryReloadToken()"
+    (viewProfile)="openProfile($event)"
+    (createPlan)="openCreatePlan($event)"
+  />
+</div>
+
+<app-create-customer-drawer
+  [isOpen]="createCustomerOpen()"
+  (closed)="closeCreateCustomer()"
+  (customerCreated)="onCustomerCreated()"
+/>
+
+<app-create-plan-drawer
+  [isOpen]="createPlanOpen()"
+  [customer]="selectedCustomer()"
+  (closed)="closeCreatePlan()"
+  (planCreated)="directoryReloadToken.update((token) => token + 1)"
+/>
+
+<app-customer-profile-drawer
+  [isOpen]="profileOpen()"
+  [customerId]="profileCustomerId()"
+  (closed)="closeProfile()"
+/>

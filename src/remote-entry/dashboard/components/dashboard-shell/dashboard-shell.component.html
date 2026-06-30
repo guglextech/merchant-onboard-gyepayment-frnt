@@ -1,0 +1,18 @@
+<div class="sidebar-workspace-dashboard">
+  <aside class="switcher-rail">
+    <app-switcher />
+  </aside>
+
+  <app-dashboard-sidebar [items]="sidebarItems" />
+
+  <section class="workspace">
+    <app-dashboard-header
+      [title]="pageTitle()"
+      [userName]="merchantName()"
+      [userEmail]="merchantEmail()"
+    />
+    <div class="workspace-content">
+      <router-outlet />
+    </div>
+  </section>
+</div>

@@ -1,0 +1,83 @@
+@use '../../styles/settings-shared';
+
+.settings-panel {
+  background: #fff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #eef1f4;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__copy {
+    strong {
+      display: block;
+      font-size: 0.875rem;
+      color: #1f2d38;
+    }
+
+    p {
+      margin: 0.15rem 0 0;
+      font-size: 0.78rem;
+      color: #83929d;
+    }
+  }
+}
+
+.toggle-switch {
+  position: relative;
+  flex: 0 0 auto;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__track {
+    display: block;
+    width: 2.4rem;
+    height: 1.35rem;
+    background: #cbd5de;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0.18rem;
+      left: 0.18rem;
+      width: 1rem;
+      height: 1rem;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  input:checked + .toggle-switch__track {
+    background: #1e4962;
+
+    &::after {
+      transform: translateX(1.05rem);
+    }
+  }
+}

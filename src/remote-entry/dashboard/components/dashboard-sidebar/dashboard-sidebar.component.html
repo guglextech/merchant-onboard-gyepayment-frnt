@@ -1,0 +1,40 @@
+<aside class="side-rail">
+  <div class="sidebar-top">
+    <div class="brand">
+      <span class="brand-mark"> {{ currentUserInitial }}</span>
+      <div class="brand-copy">
+        <span class="brand-text"> {{ currentUserName }}</span>
+        <small> Merchant Account</small>
+      </div>
+    </div>
+
+    <!-- <section class="profile">
+      <span class="profile-avatar">{{ currentUserInitial }}</span>
+      <div class="profile-copy">
+        <span class="profile-name">{{ currentUserName }}</span>
+        <small>Workspace Admin</small>
+      </div>
+      <span class="profile-caret">▾</span>
+    </section> -->
+  </div>
+
+  <nav class="menu" aria-label="Sidebar Navigation">
+    <small class="menu-title">Main Menu</small>
+    @for (item of items; track item.route) {
+      <a
+        class="menu-item"
+        [routerLink]="item.route"
+        routerLinkActive="menu-item--active"
+        [routerLinkActiveOptions]="{ exact: item.route === 'overview' }"
+      >
+        <i class="menu-icon bi" [ngClass]="item.icon" aria-hidden="true"></i>
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    <p>Need help?</p>
+    <a href="#">Contact support</a>
+  </div>
+</aside>

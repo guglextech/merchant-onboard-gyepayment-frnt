@@ -1,0 +1,95 @@
+<section class="settings-panel">
+  <h2 class="panel-title">Security</h2>
+  <p class="panel-sub">Control access, credentials, and account protection.</p>
+
+  <h3 class="sub-title">Change Password</h3>
+
+  @if (submitError) {
+    <div class="form-alert form-alert--error mb-3">{{ submitError }}</div>
+  }
+  @if (submitSuccess) {
+    <div class="form-alert form-alert--success mb-3">{{ submitSuccess }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="password-form">
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="current-password" class="form-label">
+          Current password <span class="text-danger">*</span>
+        </label>
+        <input
+          id="current-password"
+          type="password"
+          class="form-control"
+          formControlName="currentPassword"
+          autocomplete="current-password"
+          [class.is-invalid]="form.get('currentPassword')?.invalid && form.get('currentPassword')?.touched"
+        />
+        @if (fieldError('currentPassword')) {
+          <div class="invalid-feedback">{{ fieldError('currentPassword') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="new-password" class="form-label">
+          New password <span class="text-danger">*</span>
+        </label>
+        <input
+          id="new-password"
+          type="password"
+          class="form-control"
+          formControlName="newPassword"
+          autocomplete="new-password"
+          [class.is-invalid]="form.get('newPassword')?.invalid && form.get('newPassword')?.touched"
+        />
+        @if (fieldError('newPassword')) {
+          <div class="invalid-feedback">{{ fieldError('newPassword') }}</div>
+        } @else {
+          <div class="form-text">Minimum 8 characters.</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="confirm-password" class="form-label">
+          Confirm new password <span class="text-danger">*</span>
+        </label>
+        <input
+          id="confirm-password"
+          type="password"
+          class="form-control"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+          [class.is-invalid]="(form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched) || (form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched)"
+        />
+        @if (fieldError('confirmPassword')) {
+          <div class="invalid-feedback">{{ fieldError('confirmPassword') }}</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-btn action-btn--primary" [disabled]="submitting">
+        @if (submitting) {
+          Updating...
+        } @else {
+          Update password
+        }
+      </button>
+    </div>
+  </form>
+
+  <div class="divider"></div>
+
+  <h3 class="sub-title">Two-Factor Authentication</h3>
+
+  <div class="security-item">
+    <div class="security-item__copy">
+      <strong>Authenticator app</strong>
+      <p>Add an extra layer of protection using a time-based one-time password.</p>
+    </div>
+    <div class="security-item__actions">
+      <span class="status-badge status-badge--muted">Coming soon</span>
+      <button type="button" class="action-btn" disabled>Enable 2FA</button>
+    </div>
+  </div>
+</section>

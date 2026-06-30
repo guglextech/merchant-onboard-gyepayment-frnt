@@ -1,0 +1,239 @@
+<div class="dt">  
+  <div class="dt__toolbar">
+    @if (searchable) {
+      <div class="dt__search">
+        <svg class="dt__search-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11"/>
+        </svg>
+        <input
+          type="search"
+          class="dt__search-input"
+          [placeholder]="searchPlaceholder"
+          (input)="onSearchTermChange($any($event.target).value)"
+        />
+      </div>
+    }
+
+    <div class="dt__toolbar-end">
+      <label class="dt__page-size">
+        <span>Rows per page</span>
+        <select
+          class="dt__select"
+          [value]="pageSize"
+          (change)="onPageSizeChange($any($event.target).value)"
+        >
+          @for (opt of pageSizeOptions; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="dt__scroll">
+    <table class="dt__table">
+
+      <thead class="dt__thead">
+        <tr>
+          @for (col of columns; track col.key) {
+            <th
+              class="dt__th"
+              [style.width]="col.width || null"
+              [class.dt__th--center]="col.align === 'center'"
+              [class.dt__th--end]="col.align === 'end'"
+              [class.dt__th--sortable]="col.sortable"
+              [class.dt__th--sorted]="sortState(col) !== null"
+              (click)="toggleSort(col)"
+            >
+              <span class="dt__th-inner">
+                {{ col.label }}
+                @if (col.sortable) {
+                  <span class="dt__sort-icon" [attr.data-dir]="sortState(col)">
+                    @if (sortState(col) === 'asc') {
+                      <svg viewBox="0 0 16 16" aria-label="sorted ascending">
+                        <path d="M7.646 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8 5.707 5.354 8.354a.5.5 0 1 1-.708-.708z"/>
+                      </svg>
+                    } @else if (sortState(col) === 'desc') {
+                      <svg viewBox="0 0 16 16" aria-label="sorted descending">
+                        <path d="M7.646 11.354a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8 10.293 5.354 7.646a.5.5 0 0 0-.708.708z"/>
+                      </svg>
+                    } @else {
+                      <svg viewBox="0 0 16 16" aria-label="sortable">
+                        <path d="M3.5 3.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 12.293zm4 .5a.5.5 0 0 1 0-1h1a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1zM7 12.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5"/>
+                      </svg>
+                    }
+                  </span>
+                }
+              </span>
+
+              @if (col.headerAction; as action) {
+                <button
+                  class="dt__col-action"
+                  type="button"
+                  [attr.aria-label]="action.label"
+                  (click)="$event.stopPropagation(); triggerColumnAction(action.id, col.key)"
+                >
+                  <i class="bi {{ action.iconClass || 'bi-three-dots-vertical' }}"></i>
+                </button>
+              }
+            </th>
+          }
+
+          @if (hasRowActions) {
+            <th class="dt__th dt__th--actions"></th>
+          }
+        </tr>
+      </thead>
+
+      <tbody class="dt__tbody">
+        @if (loading && paginatedRows.length === 0) {
+          <tr>
+            <td class="dt__state-cell" [attr.colspan]="columns.length + (hasRowActions ? 1 : 0)">
+              <div class="dt__state">
+                <span class="dt__spinner" role="status" aria-label="Loading"></span>
+                <span>Loading…</span>
+              </div>
+            </td>
+          </tr>
+        } @else if (paginatedRows.length === 0) {
+          <tr>
+            <td class="dt__state-cell" [attr.colspan]="columns.length + (hasRowActions ? 1 : 0)">
+              <div class="dt__state dt__state--empty">
+                <svg class="dt__empty-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20 6H4V4h16v2zm2 2H2v12h20V8zM4 10h16v8H4v-8zm3 2v4h2v-4H7zm4 0v4h2v-4h-2zm4 0v4h2v-4h-2z" opacity=".3"/>
+                  <path d="M2 20h20V8H2v12zm2-10h16v8H4v-8zM2 6v2h20V6H2zm5 6h2v4H7v-4zm4 0h2v4h-2v-4zm4 0h2v4h-2v-4z"/>
+                </svg>
+                <span>{{ emptyMessage }}</span>
+              </div>
+            </td>
+          </tr>
+        } @else {
+          @for (row of paginatedRows; track rowTrackBy($index, row)) {
+            <tr class="dt__row dt__row--clickable" (click)="triggerRowClick(row)">
+              @for (col of columns; track col.key) {
+                <td
+                  class="dt__td"
+                  [class.dt__td--center]="col.align === 'center'"
+                  [class.dt__td--end]="col.align === 'end'"
+                >
+                  @if (badgeClass(row, col); as badge) {
+                    <span [class]="badge">{{ renderCellValue(row, col) }}</span>
+
+                  } @else if (col.avatarKey) {
+                    <span class="dt__cell-with-avatar">
+                      <span
+                        class="dt__avatar"
+                        [style.background]="getAvatarColor(resolveAvatarText(row, col))"
+                        aria-hidden="true"
+                      >
+                        {{ getInitials(resolveAvatarText(row, col)) }}
+                      </span>
+                      @if (cellIsEmpty(row, col)) {
+                        <span class="dt__placeholder">{{ col.placeholderText || '—' }}</span>
+                      } @else {
+                        <span class="dt__cell-text">{{ renderCellValue(row, col) }}</span>
+                      }
+                    </span>
+
+                  } @else if (cellIsEmpty(row, col)) {
+                    <span class="dt__placeholder">{{ col.placeholderText || '—' }}</span>
+
+                  } @else {
+                    {{ renderCellValue(row, col) }}
+                  }
+                </td>
+              }
+
+              @if (hasRowActions) {
+                <td class="dt__td dt__td--actions" (click)="stopRowClick($event)">
+                  <div class="dropdown">
+                    <button
+                      class="dt__more-btn"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      aria-label="Row actions"
+                      (click)="stopRowClick($event)"
+                    >
+                      <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                      </svg>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dt__dropdown">
+                      @for (action of rowActions; track action.id) {
+                        @if (isActionVisible(action, row)) {
+                          <li>
+                            <button
+                              type="button"
+                              class="dropdown-item dt__dropdown-item"
+                              [class.dt__dropdown-item--danger]="action.variant === 'danger'"
+                              [disabled]="isActionDisabled(action, row)"
+                              (click)="triggerRowAction(action.id, row, $event)"
+                            >
+                              @if (action.iconClass) {
+                                <i class="bi {{ action.iconClass }}"></i>
+                              }
+                              {{ action.label }}
+                            </button>
+                          </li>
+                        }
+                      }
+                    </ul>
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="dt__footer">
+    <span class="dt__meta">
+      @if (effectiveTotalItems === 0) {
+        No records
+      } @else {
+        {{ startRecord }}–{{ endRecord }} of {{ effectiveTotalItems }}
+      }
+    </span>
+
+    <nav class="dt__pagination" aria-label="Table pagination">
+      <button
+        class="dt__page-btn"
+        type="button"
+        [disabled]="page === 1"
+        (click)="goToPage(page - 1)"
+        aria-label="Previous page"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+        </svg>
+      </button>
+
+      @for (n of visiblePageNumbers; track n) {
+        <button
+          class="dt__page-btn"
+          type="button"
+          [class.dt__page-btn--active]="n === page"
+          (click)="goToPage(n)"
+          [attr.aria-current]="n === page ? 'page' : null"
+        >
+          {{ n }}
+        </button>
+      }
+
+      <button
+        class="dt__page-btn"
+        type="button"
+        [disabled]="page === totalPages"
+        (click)="goToPage(page + 1)"
+        aria-label="Next page"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4.646 1.646a.5.5 0 0 0 0 .708L10.293 8 4.646 13.646a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708l-6-6a.5.5 0 0 0-.708 0"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</div>

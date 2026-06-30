@@ -1,0 +1,82 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.switch-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 0.55rem;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, outline-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.switch-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.switch-btn--active {
+  outline: 2px solid #8cc63f;
+  outline-offset: 2px;
+}
+
+.switch-badge {
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.switch-badge--green {
+  background: linear-gradient(180deg, #1e5f78 0%, #256882 100%);
+  color: #d6eef8;
+}
+
+.switch-badge--light {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 999px;
+  font-size: 0.66rem;
+}
+
+.switch-badge--red {
+  background: #fff0ee;
+  color: #c0534e;
+}
+
+.switch-btn--add {
+  background: transparent;
+  border: 1.5px dashed rgba(180, 210, 225, 0.35);
+  margin-top: 0.2rem;
+}
+
+.switch-plus {
+  color: #b4d2e1;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+}

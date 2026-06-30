@@ -1,0 +1,502 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Data Table — shared standalone component
+   Palette tokens (light mode only for now)
+────────────────────────────────────────────────────────────────────────── */
+:host {
+  display: block;
+  --dt-bg:           #ffffff;
+  --dt-border:       #eef0f4;
+  --dt-row-sep:      #f3f5f8;
+  --dt-row-hover:    #f8fafc;
+  --dt-header-text:  #8d97a5;
+  --dt-body-text:    #1a2533;
+  --dt-muted:        #9baab7;
+  --dt-placeholder:  #b8c4cf;
+  --dt-accent:       #1e4962;
+  --dt-danger:       #dc2626;
+  --dt-radius:       14px;
+  --dt-font:         inherit;
+}
+
+/* ── Shell ─────────────────────────────────────────────────────────────── */
+.dt {
+  font-family: var(--dt-font);
+  background: var(--dt-bg);
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius);
+  overflow: hidden;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────────── */
+.dt__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--dt-border);
+  flex-wrap: wrap;
+}
+
+.dt__search {
+  position: relative;
+  width: min(100%, 300px);
+}
+
+.dt__search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.82rem;
+  height: 0.82rem;
+  fill: var(--dt-muted);
+  pointer-events: none;
+}
+
+.dt__search-input {
+  width: 100%;
+  padding: 0.45rem 0.85rem 0.45rem 2.1rem;
+  font-size: 0.85rem;
+  color: var(--dt-body-text);
+  background: #f7f9fb;
+  border: 1px solid var(--dt-border);
+  border-radius: 9px;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+}
+
+.dt__search-input:focus {
+  background: var(--dt-bg);
+  border-color: var(--dt-accent);
+  box-shadow: 0 0 0 3px rgba(30, 73, 98, 0.1);
+}
+
+.dt__search-input::placeholder {
+  color: var(--dt-placeholder);
+}
+
+/* hide browser "×" clear button to keep styling consistent */
+.dt__search-input::-webkit-search-cancel-button { display: none; }
+
+.dt__toolbar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dt__page-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--dt-muted);
+  cursor: default;
+  user-select: none;
+}
+
+.dt__select {
+  padding: 0.3rem 1.6rem 0.3rem 0.6rem;
+  font-size: 0.82rem;
+  color: var(--dt-body-text);
+  background: #f7f9fb url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239baab7' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") no-repeat right 0.5rem center / 10px;
+  border: 1px solid var(--dt-border);
+  border-radius: 8px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.dt__select:focus {
+  border-color: var(--dt-accent);
+  box-shadow: 0 0 0 3px rgba(30, 73, 98, 0.1);
+}
+
+/* ── Table ─────────────────────────────────────────────────────────────── */
+.dt__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dt__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.dt__thead tr {
+  border-bottom: 1px solid var(--dt-border);
+}
+
+.dt__th {
+  padding: 0.75rem 1.1rem;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--dt-header-text);
+  white-space: nowrap;
+  background: var(--dt-bg);
+  border: none;
+  user-select: none;
+}
+
+.dt__th--center { text-align: center; }
+.dt__th--end    { text-align: right; }
+.dt__th--actions { width: 52px; }
+
+.dt__th--sortable {
+  cursor: pointer;
+}
+
+.dt__th--sortable:hover .dt__th-inner {
+  color: var(--dt-body-text);
+}
+
+.dt__th--sorted .dt__th-inner {
+  color: var(--dt-body-text);
+}
+
+.dt__th-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+  transition: color 0.15s ease;
+}
+
+.dt__sort-icon {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+}
+
+.dt__sort-icon svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
+}
+
+.dt__th--sorted .dt__sort-icon,
+.dt__th--sortable:hover .dt__sort-icon {
+  opacity: 1;
+}
+
+.dt__col-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dt-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.dt__th:hover .dt__col-action {
+  opacity: 1;
+}
+
+.dt__col-action:hover {
+  background: var(--dt-row-hover);
+  color: var(--dt-body-text);
+}
+
+
+.dt__tbody .dt__row {
+  border-bottom: 1px solid var(--dt-row-sep);
+  transition: background 0.12s ease;
+}
+
+.dt__tbody .dt__row--clickable {
+  cursor: pointer;
+}
+
+.dt__tbody .dt__row:last-child {
+  border-bottom: none;
+}
+
+.dt__tbody .dt__row:hover {
+  background: var(--dt-row-hover);
+}
+
+.dt__td {
+  padding: 0.9rem 1.1rem;
+  color: var(--dt-body-text);
+  font-weight: 500;
+  white-space: nowrap;
+  border: none;
+  vertical-align: middle;
+}
+
+.dt__td--center { text-align: center; }
+.dt__td--end    { text-align: right; }
+
+.dt__td--actions {
+  width: 52px;
+  text-align: right;
+}
+
+/* ── Avatar + text cell ─────────────────────────────────────────────────── */
+.dt__cell-with-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dt__avatar {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.dt__cell-text {
+  font-weight: 600;
+  color: var(--dt-body-text);
+}
+
+/* ── Placeholder text ───────────────────────────────────────────────────── */
+.dt__placeholder {
+  color: var(--dt-placeholder);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* ── Badge override (badge utility classes applied via badgeMap) ─────────── */
+.dt-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.dt-badge--success { color: #15803d; background: #dcfce7; }
+.dt-badge--warning { color: #b45309; background: #fef9c3; }
+.dt-badge--danger  { color: #b91c1c; background: #fee2e2; }
+.dt-badge--default { color: var(--dt-muted); background: #f1f5f9; }
+
+/* ── Row more-actions button ───────────────────────────────────────────── */
+.dt__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dt-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+
+.dt__more-btn svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.dt__row:hover .dt__more-btn {
+  opacity: 1;
+}
+
+.dt__more-btn:hover {
+  background: #f0f2f6;
+  color: var(--dt-body-text);
+}
+
+/* ── Dropdown ──────────────────────────────────────────────────────────── */
+.dt__dropdown {
+  min-width: 11rem;
+  padding: 0.35rem;
+  border: 1px solid var(--dt-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.dt__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #374151;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.dt__dropdown-item i {
+  font-size: 0.9rem;
+  color: var(--dt-muted);
+  width: 1rem;
+  text-align: center;
+}
+
+.dt__dropdown-item:hover,
+.dt__dropdown-item:focus {
+  background: #f3f6fa;
+  color: var(--dt-body-text);
+}
+
+.dt__dropdown-item--danger {
+  color: var(--dt-danger);
+}
+
+.dt__dropdown-item--danger i {
+  color: var(--dt-danger);
+}
+
+.dt__dropdown-item--danger:hover,
+.dt__dropdown-item--danger:focus {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* ── Empty / loading state ─────────────────────────────────────────────── */
+.dt__state-cell {
+  padding: 0;
+  border: none;
+}
+
+.dt__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 200px;
+  color: var(--dt-muted);
+  font-size: 0.9rem;
+}
+
+.dt__state--empty {
+  color: var(--dt-placeholder);
+}
+
+.dt__empty-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--dt-row-sep);
+}
+
+.dt__spinner {
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 2px solid var(--dt-border);
+  border-top-color: var(--dt-accent);
+  border-radius: 50%;
+  animation: dt-spin 0.7s linear infinite;
+}
+
+@keyframes dt-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.dt__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--dt-border);
+  flex-wrap: wrap;
+}
+
+.dt__meta {
+  font-size: 0.8rem;
+  color: var(--dt-muted);
+}
+
+.dt__pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.dt__page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #475569;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.dt__page-btn svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
+}
+
+.dt__page-btn:hover:not(:disabled):not(.dt__page-btn--active) {
+  background: #f1f5f9;
+  border-color: var(--dt-border);
+}
+
+.dt__page-btn--active {
+  background: var(--dt-accent);
+  border-color: var(--dt-accent);
+  color: #fff;
+}
+
+.dt__page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .dt__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dt__search {
+    width: 100%;
+  }
+
+  .dt__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

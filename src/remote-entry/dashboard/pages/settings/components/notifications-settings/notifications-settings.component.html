@@ -1,0 +1,66 @@
+<section class="settings-panel">
+  <h2 class="panel-title">Notifications</h2>
+  <p class="panel-sub">Choose which events trigger email and in-app alerts.</p>
+
+  <div class="toggle-list">
+    <div class="toggle-row">
+      <div class="toggle-row__copy">
+        <strong>Collection alerts</strong>
+        <p>Notify when a collection is due or overdue.</p>
+      </div>
+      <label class="toggle-switch">
+        <input
+          type="checkbox"
+          [checked]="notifications().collectionAlerts"
+          (change)="toggle('collectionAlerts')"
+        />
+        <span class="toggle-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-row__copy">
+        <strong>Settlement reports</strong>
+        <p>Receive a report each time a batch is settled.</p>
+      </div>
+      <label class="toggle-switch">
+        <input
+          type="checkbox"
+          [checked]="notifications().settlementReports"
+          (change)="toggle('settlementReports')"
+        />
+        <span class="toggle-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-row__copy">
+        <strong>Overdue reminders</strong>
+        <p>Daily digest of overdue accounts requiring follow-up.</p>
+      </div>
+      <label class="toggle-switch">
+        <input
+          type="checkbox"
+          [checked]="notifications().overdueReminders"
+          (change)="toggle('overdueReminders')"
+        />
+        <span class="toggle-switch__track"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-row__copy">
+        <strong>System updates</strong>
+        <p>Platform maintenance and feature release announcements.</p>
+      </div>
+      <label class="toggle-switch">
+        <input
+          type="checkbox"
+          [checked]="notifications().systemUpdates"
+          (change)="toggle('systemUpdates')"
+        />
+        <span class="toggle-switch__track"></span>
+      </label>
+    </div>
+  </div>
+</section>

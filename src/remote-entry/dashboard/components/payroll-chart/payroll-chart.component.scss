@@ -1,0 +1,143 @@
+.chart-panel {
+  background: #ffffff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 0.95rem;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3d47;
+}
+
+.panel-head p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #7f8e99;
+}
+
+.chart-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Donut section */
+.donut-section {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.donut-svg {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+}
+
+.donut-count {
+  font-size: 22px;
+  font-weight: 700;
+  fill: #1f2d38;
+}
+
+.donut-sub {
+  font-size: 10px;
+  fill: #9aabb6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-label {
+  font-size: 0.72rem;
+  color: #5b6e7a;
+  flex: 1;
+}
+
+.legend-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1f2d38;
+  min-width: 1.2rem;
+  text-align: right;
+}
+
+/* Stats section */
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rate-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rate-svg {
+  width: 130px;
+  height: 130px;
+}
+
+.rate-count {
+  font-size: 20px;
+  font-weight: 700;
+  fill: #22c55e;
+}
+
+.rate-sub {
+  font-size: 10px;
+  fill: #9aabb6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rate-label {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #7f8e99;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .chart-body {
+    grid-template-columns: 1fr;
+  }
+
+  .donut-section {
+    justify-content: center;
+  }
+}

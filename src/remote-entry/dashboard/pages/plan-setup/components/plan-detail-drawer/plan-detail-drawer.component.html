@@ -1,0 +1,140 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="Plan Details"
+  subtitle="Payment plan summary and instalment schedule."
+  width="580px"
+  (closed)="close()"
+>
+  <div drawer-body class="plan-detail-body">
+    @if (plan(); as planData) {
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-header__left">
+            <span class="plan-desc">{{ planData.description || 'Payment Plan' }}</span>
+            <span
+              class="plan-status-badge"
+              [style.background]="statusCfg(planData.status).bg"
+              [style.color]="statusCfg(planData.status).text"
+            >
+              {{ statusCfg(planData.status).label }}
+            </span>
+          </div>
+          <span class="plan-freq">{{ planData.frequency }}</span>
+        </div>
+
+        <div class="plan-amounts">
+          <div class="plan-amount-item">
+            <span class="plan-amount-label">Total</span>
+            <span class="plan-amount-value">{{ formatMoney(planData.totalAmount) }}</span>
+          </div>
+          <div class="plan-amount-item">
+            <span class="plan-amount-label">Down Payment</span>
+            <span class="plan-amount-value">{{ formatMoney(planData.downPayment) }}</span>
+          </div>
+          <div class="plan-amount-item">
+            <span class="plan-amount-label">Paid</span>
+            <span class="plan-amount-value plan-amount-value--paid">{{ formatMoney(planData.paidAmount) }}</span>
+          </div>
+          <div class="plan-amount-item">
+            <span class="plan-amount-label">Outstanding</span>
+            <span class="plan-amount-value">{{ formatMoney(planData.outstandingAmount) }}</span>
+          </div>
+        </div>
+
+        <div class="plan-dates">
+          {{ formatPlanDate(planData.startDate) }} → {{ formatPlanDate(planData.endDate) }}
+          · {{ planData.installmentCount }} instalments
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="sub-title">Reference</h3>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Customer ID</span>
+          <span class="detail-value detail-value--mono">{{ planData.customerId }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Mandate ID</span>
+          <span class="detail-value detail-value--mono">{{ planData.mandateId }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Paid Instalments</span>
+          <span class="detail-value">{{ planData.paidInstallmentsCount }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Failed Instalments</span>
+          <span class="detail-value">{{ planData.failedInstallmentsCount }}</span>
+        </div>
+      </div>
+
+      @if (planData.installments?.length) {
+        <div class="divider"></div>
+
+        <h3 class="sub-title">
+          Instalment Schedule
+          <span class="section-count">{{ planData.installments!.length }}</span>
+        </h3>
+
+        <div class="legend-box">
+          <span class="legend-title">Status Legend</span>
+          <div class="legend-pills">
+            @for (status of installmentStatuses; track status) {
+              <span class="legend-pill">
+                <span class="legend-pip" [style.background]="statusCfg(status).dot"></span>
+                {{ statusCfg(status).label }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <div class="timeline">
+          @for (inst of planData.installments; track inst.id; let last = $last) {
+            <div class="timeline-item" [class.timeline-item--last]="last">
+              <div class="timeline-dot" [style.background]="statusCfg(inst.status).dot"></div>
+              <div class="timeline-line" [style.display]="last ? 'none' : 'block'"></div>
+              <div class="timeline-content">
+                <div class="tl-row">
+                  <span class="tl-num">#{{ inst.installmentNo }}</span>
+                  <span
+                    class="tl-badge"
+                    [style.background]="statusCfg(inst.status).bg"
+                    [style.color]="statusCfg(inst.status).text"
+                  >
+                    {{ statusCfg(inst.status).label }}
+                  </span>
+                  <span class="tl-amount">{{ formatMoney(inst.amount) }}</span>
+                </div>
+                <div class="tl-meta">
+                  <span>Due {{ inst.dueDate | date: 'd MMM y' }}</span>
+                  @if (inst.paidAt) {
+                    <span class="tl-paid">
+                      · Paid {{ inst.paidAt | date: 'd MMM y' }}
+                      @if (inst.paidAmount) {
+                        · {{ formatMoney(inst.paidAmount) }}
+                      }
+                    </span>
+                  }
+                  @if (inst.attemptsCount > 0) {
+                    <span class="tl-attempts">
+                      · {{ inst.attemptsCount }} attempt{{ inst.attemptsCount !== 1 ? 's' : '' }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="divider"></div>
+        <p class="empty-schedule">No instalment schedule available for this plan.</p>
+      }
+    }
+  </div>
+
+  <div drawer-footer class="drawer-actions">
+    <button type="button" class="btn-primary" (click)="close()">Close</button>
+  </div>
+</app-side-drawer>

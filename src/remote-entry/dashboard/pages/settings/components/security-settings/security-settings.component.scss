@@ -1,0 +1,54 @@
+@use '../../styles/settings-shared';
+
+.settings-panel {
+  background: #fff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.password-form {
+  margin-bottom: 0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+
+  &__copy {
+    strong {
+      display: block;
+      font-size: 0.875rem;
+      color: #1f2d38;
+    }
+
+    p {
+      margin: 0.15rem 0 0;
+      font-size: 0.78rem;
+      color: #83929d;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .security-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,58 @@
+@use '../../styles/settings-shared';
+
+.settings-panel {
+  background: #fff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.api-key-card {
+  background: #f7f9fb;
+  border: 1px solid #dce2e8;
+  border-radius: 9px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4a5c67;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__value {
+    font-size: 0.82rem;
+    color: #374151;
+    background: #fff;
+    border: 1px solid #dce2e8;
+    border-radius: 6px;
+    padding: 0.45rem 0.7rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.03em;
+    word-break: break-all;
+  }
+
+  &__hint,
+  &__empty {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #83929d;
+    line-height: 1.45;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}

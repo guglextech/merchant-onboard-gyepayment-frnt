@@ -1,0 +1,24 @@
+@use '../../styles/settings-shared';
+
+.settings-panel {
+  background: #fff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.status-text {
+  font-size: 0.8rem;
+  color: #5a6b76;
+}
+
+.form-control[readonly] {
+  background: #f8fafb;
+  color: #4a5c67;
+}

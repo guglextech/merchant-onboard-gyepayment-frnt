@@ -1,0 +1,19 @@
+<div class="page-content">
+  <header class="page-hero">
+    <div>
+      <h1>Plan Setup</h1>
+      <p>View and manage customer payment plans and instalment schedules.</p>
+    </div>
+  </header>
+
+  <app-plan-directory
+    [reloadToken]="directoryReloadToken()"
+    (viewPlan)="openPlan($event)"
+  />
+</div>
+
+<app-plan-detail-drawer
+  [isOpen]="detailOpen()"
+  [plan]="selectedPlan()"
+  (closed)="closePlan()"
+/>

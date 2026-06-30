@@ -1,0 +1,64 @@
+<section class="settings-panel">
+  <h2 class="panel-title">API & Integrations</h2>
+  <p class="panel-sub">Generate and manage your live API key for server-side integrations.</p>
+
+  @if (error()) {
+    <div class="form-alert form-alert--error mb-3">{{ error() }}</div>
+  }
+
+  <div class="api-key-card">
+    <div class="api-key-card__top">
+      <span class="api-key-card__label">Live API key</span>
+      @if (hasKey) {
+        <span class="status-badge status-badge--active">Active</span>
+      } @else {
+        <span class="status-badge status-badge--muted">Not generated</span>
+      }
+    </div>
+
+    @if (hasKey) {
+      <code class="api-key-card__value">{{ displayKey }}</code>
+      <p class="api-key-card__hint">
+        @if (revealed()) {
+          Copy this key now — it will only be shown in full once after generation.
+        } @else {
+          Store this key securely. Regenerating will invalidate the previous key.
+        }
+      </p>
+      <div class="api-key-card__actions">
+        @if (rawKey()) {
+          <button type="button" class="action-btn" (click)="toggleReveal()">
+            {{ revealed() ? 'Hide' : 'Reveal' }}
+          </button>
+          <button type="button" class="action-btn" (click)="copyKey()">
+            {{ copied() ? 'Copied' : 'Copy' }}
+          </button>
+        }
+        <button
+          type="button"
+          class="action-btn action-btn--danger"
+          [disabled]="loading()"
+          (click)="generate()"
+        >
+          Regenerate
+        </button>
+      </div>
+    } @else {
+      <p class="api-key-card__empty">
+        Generate an API key to authenticate requests from your backend systems.
+      </p>
+      <button
+        type="button"
+        class="action-btn action-btn--primary"
+        [disabled]="loading()"
+        (click)="generate()"
+      >
+        @if (loading()) {
+          Generating...
+        } @else {
+          Generate API key
+        }
+      </button>
+    }
+  </div>
+</section>

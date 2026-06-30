@@ -1,0 +1,68 @@
+<header class="workspace-header">
+  <h2>{{ title }}</h2>
+
+  <div class="header-actions">
+    <button type="button" class="icon-btn" aria-label="Notifications">
+      <i class="bi bi-bell"></i>
+      <span class="icon-btn__dot" aria-hidden="true"></span>
+    </button>
+
+    <div class="dropdown profile-dropdown">
+      <button
+        type="button"
+        class="profile-trigger"
+        id="profileMenuButton"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-expanded="false"
+      >
+        <span class="profile-avatar">{{ initials }}</span>
+        <span class="profile-trigger__copy">
+          <span class="profile-trigger__name">{{ userName }}</span>
+          <small>{{ userRole }}</small>
+        </span>
+        <i class="bi bi-chevron-down profile-trigger__caret"></i>
+      </button>
+
+      <ul
+        class="dropdown-menu dropdown-menu-end profile-menu shadow"
+        aria-labelledby="profileMenuButton"
+      >
+        <li class="profile-menu__head">
+          <span class="profile-avatar profile-avatar--lg">{{ initials }}</span>
+          <div class="profile-menu__identity">
+            <strong>{{ userName }}</strong>
+            <small>{{ userEmail }}</small>
+          </div>
+        </li>
+
+        <li><hr class="dropdown-divider" /></li>
+
+        @for (item of menuItems; track item.label) {
+          <li>
+            @if (item.route) {
+              <a class="dropdown-item" [routerLink]="item.route">
+                <i class="bi {{ item.icon }}"></i>
+                <span>{{ item.label }}</span>
+              </a>
+            } @else {
+              <button type="button" class="dropdown-item">
+                <i class="bi {{ item.icon }}"></i>
+                <span>{{ item.label }}</span>
+              </button>
+            }
+          </li>
+        }
+
+        <li><hr class="dropdown-divider" /></li>
+
+        <li>
+          <button type="button" class="dropdown-item dropdown-item--danger" (click)="signOut()">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Sign out</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

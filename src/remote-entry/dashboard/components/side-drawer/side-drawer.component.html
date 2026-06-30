@@ -1,0 +1,39 @@
+<div
+  class="drawer-backdrop"
+  [class.drawer-backdrop--open]="isOpen"
+  [attr.inert]="isOpen ? null : ''"
+  (click)="onBackdropClick($event)"
+>
+  <aside
+    class="drawer-panel"
+    [class.drawer-panel--open]="isOpen"
+    [style.width]="width"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="title"
+  >
+    <header class="drawer-header">
+      <div class="drawer-header__text">
+        <h3 class="drawer-title">{{ title }}</h3>
+        @if (subtitle) {
+          <p class="drawer-subtitle">{{ subtitle }}</p>
+        }
+      </div>
+      <button type="button" class="drawer-close" (click)="close()" aria-label="Close panel">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <div class="drawer-body">
+      <ng-content select="[drawer-body]" />
+    </div>
+
+    <footer class="drawer-footer">
+      <ng-content select="[drawer-footer]" />
+    </footer>
+  </aside>
+</div>

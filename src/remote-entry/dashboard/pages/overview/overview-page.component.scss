@@ -1,0 +1,247 @@
+.overview-page {
+  height: 100%;
+  overflow: auto;
+  padding: 1.25rem 1.35rem 1.5rem;
+}
+
+.overview-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.overview-hero__copy h1 {
+  margin: 0.35rem 0 0.3rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2d38;
+  line-height: 1.2;
+}
+
+.overview-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: #8f9eaa;
+  font-size: 0.74rem;
+}
+
+.overview-hero__subtitle {
+  margin: 0;
+  max-width: 34rem;
+  color: #7b8b96;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.overview-hero__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: 8px;
+  background: #1e4962;
+  color: #f7fdff;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.68rem 1.1rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.overview-hero__action:hover {
+  background: #163a50;
+}
+
+.overview-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 1rem;
+}
+
+@media (max-width: 1240px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Recent transactions table */
+.txn-table-card {
+  background: #ffffff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 0.95rem;
+  margin-top: 1rem;
+}
+
+.txn-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.txn-table-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3d47;
+}
+
+.txn-table-count {
+  font-size: 0.72rem;
+  color: #9aabb6;
+  background: #f4f7f9;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.txn-table-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: #b0bec5;
+  font-size: 0.8rem;
+}
+
+.txn-empty-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: #b0bec5;
+  flex-shrink: 0;
+}
+
+.txn-table-wrap {
+  overflow-x: auto;
+}
+
+.txn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.txn-table thead tr {
+  border-bottom: 1px solid #eceef1;
+}
+
+.txn-table th {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #9aabb6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.txn-table tbody tr {
+  border-bottom: 1px solid #f4f7f9;
+  transition: background 0.12s ease;
+}
+
+.txn-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.txn-table tbody tr:hover {
+  background: #f8fafb;
+}
+
+.txn-table td {
+  padding: 0.7rem 0.75rem;
+  color: #3a4e5a;
+  vertical-align: middle;
+}
+
+.txn-td--customer {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  color: #1f2d38;
+  white-space: nowrap;
+}
+
+.txn-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: #e8f0f7;
+  color: #3b6e99;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.txn-td--instalment {
+  color: #7b8b96;
+  white-space: nowrap;
+}
+
+.txn-td--amount {
+  font-weight: 700;
+  color: #1f2d38;
+  white-space: nowrap;
+}
+
+.txn-td--date {
+  color: #9aabb6;
+  white-space: nowrap;
+}
+
+.txn-badge {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.txn-badge--success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.txn-badge--failed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.txn-badge--pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+@media (max-width: 720px) {
+  .overview-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .overview-hero__action {
+    justify-content: center;
+  }
+}

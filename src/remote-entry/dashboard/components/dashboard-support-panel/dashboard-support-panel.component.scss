@@ -1,0 +1,77 @@
+.help-card,
+.quick-stats {
+  background: #ffffff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 0.85rem;
+}
+
+.help-card {
+  margin-bottom: 0.75rem;
+}
+
+.help-card h4,
+.quick-stats h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+  color: #34444e;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.panel-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: #5e8eb4;
+  flex-shrink: 0;
+}
+
+.help-card p {
+  margin: 0;
+  color: #808f99;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.help-card a {
+  color: #5e8eb4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 7px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #3a4e5a;
+  text-decoration: none;
+  transition: background 0.15s ease;
+
+  svg {
+    width: 0.82rem;
+    height: 0.82rem;
+    fill: #7a9bb5;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: #f0f5fa;
+    color: #1e4962;
+
+    svg {
+      fill: #1e4962;
+    }
+  }
+}

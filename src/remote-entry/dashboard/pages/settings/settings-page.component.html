@@ -1,0 +1,42 @@
+<div class="settings-page">
+  <header class="page-hero">
+    <div>
+      <h1>Settings</h1>
+      <p>Manage your workspace, account, and integration preferences.</p>
+    </div>
+  </header>
+
+  <div class="settings-layout">
+    <nav class="settings-nav" aria-label="Settings sections">
+      @for (section of sections; track section.id) {
+        <button
+          type="button"
+          class="settings-nav__item"
+          [class.settings-nav__item--active]="activeSection() === section.id"
+          (click)="setSection(section.id)"
+        >
+          <i class="bi" [ngClass]="section.icon" aria-hidden="true"></i>
+          {{ section.label }}
+        </button>
+      }
+    </nav>
+
+    <div class="settings-body">
+      @if (activeSection() === 'profile') {
+        <app-business-profile-settings />
+      }
+
+      @if (activeSection() === 'security') {
+        <app-security-settings />
+      }
+
+      @if (activeSection() === 'notifications') {
+        <app-notifications-settings />
+      }
+
+      @if (activeSection() === 'integrations') {
+        <app-api-integrations-settings />
+      }
+    </div>
+  </div>
+</div>

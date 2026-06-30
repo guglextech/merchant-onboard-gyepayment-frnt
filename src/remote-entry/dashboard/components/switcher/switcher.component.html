@@ -1,0 +1,19 @@
+<div class="switcher" aria-label="Branch switcher">
+  @for (item of switches; track item.id) {
+    <button
+      type="button"
+      class="switch-btn"
+      [class.switch-btn--active]="activeSwitchId === item.id"
+      [attr.aria-label]="'Switch to ' + item.label"
+      (click)="switchTo(item.id)"
+    >
+      <span class="switch-badge" [class]="'switch-badge switch-badge--' + item.tone">
+        {{ item.shortLabel }}
+      </span>
+    </button>
+  }
+
+  <button type="button" class="switch-btn switch-btn--add" aria-label="Add branch or dashboard view">
+    <span class="switch-plus">+</span>
+  </button>
+</div>

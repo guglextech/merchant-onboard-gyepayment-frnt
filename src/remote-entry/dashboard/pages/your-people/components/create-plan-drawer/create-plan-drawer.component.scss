@@ -1,0 +1,37 @@
+@use '../../styles/drawer-shared';
+
+.form-alert {
+  font-size: 0.8rem;
+}
+
+.plan-customer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e8edf1;
+  border-radius: 8px;
+  background: #f8fafb;
+
+  strong {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1f2d38;
+  }
+}
+
+.plan-customer-card__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9aabb6;
+}
+
+.plan-customer-card__meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #6f7f8a;
+  font-family: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+}

@@ -1,0 +1,394 @@
+@use '../../styles/drawer-shared';
+
+.profile-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 0;
+  color: #9aabb6;
+  font-size: 0.8rem;
+}
+
+.profile-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+    max-width: 28rem;
+    line-height: 1.5;
+  }
+}
+
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+}
+
+.profile-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.profile-name {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1f2d38;
+}
+
+.profile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.prof-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.prof-badge--active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.prof-badge--danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.prof-badge--mandate {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid #eceef1;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+}
+
+.detail-item {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid #eceef1;
+  border-right: 1px solid #eceef1;
+
+  &:nth-child(even) {
+    border-right: none;
+  }
+
+  &:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+}
+
+.detail-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9aabb6;
+  margin-bottom: 0.2rem;
+}
+
+.detail-value {
+  font-size: 0.8rem;
+  color: #2d3d47;
+  font-weight: 500;
+}
+
+.detail-value--money {
+  font-weight: 700;
+  color: #1f2d38;
+}
+
+.legend-box {
+  background: #f8fafb;
+  border: 1px solid #eceef1;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.legend-title {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9aabb6;
+  margin-bottom: 0.5rem;
+}
+
+.legend-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.71rem;
+  color: #4a5c67;
+}
+
+.legend-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.plans-section {
+  margin-top: 0;
+}
+
+.plans-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2d3d47;
+}
+
+.plans-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 999px;
+  background: #eef3f7;
+  color: #3a4e5a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0 0.3rem;
+}
+
+.no-plans {
+  font-size: 0.8rem;
+  color: #9aabb6;
+  margin: 0;
+}
+
+.plan-card {
+  border: 1px solid #eceef1;
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  background: #f8fafb;
+  border-bottom: 1px solid #eceef1;
+}
+
+.plan-header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.plan-desc {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1f2d38;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plan-status-badge {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.plan-freq {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #9aabb6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.plan-amounts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #eceef1;
+}
+
+.plan-amount-item {
+  padding: 0.5rem 0.8rem;
+  border-right: 1px solid #eceef1;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.plan-amount-label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9aabb6;
+  margin-bottom: 0.15rem;
+}
+
+.plan-amount-value {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2d3d47;
+}
+
+.plan-amount-value--paid {
+  color: #15803d;
+}
+
+.plan-dates {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.72rem;
+  color: #7b8b96;
+  border-bottom: 1px solid #eceef1;
+  background: #fafbfc;
+}
+
+.timeline {
+  padding: 0.85rem 0.9rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 1rem;
+  min-height: 2.2rem;
+
+  &--last {
+    padding-bottom: 0;
+  }
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: 0;
+  width: 2px;
+  background: #eceef1;
+}
+
+.timeline-content {
+  padding-left: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.tl-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.tl-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #4a5c67;
+  min-width: 1.5rem;
+}
+
+.tl-badge {
+  display: inline-block;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.tl-amount {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #1f2d38;
+  margin-left: auto;
+}
+
+.tl-meta {
+  margin-top: 0.15rem;
+  font-size: 0.67rem;
+  color: #9aabb6;
+}
+
+.tl-paid {
+  color: #15803d;
+  font-weight: 500;
+}
+
+.tl-attempts {
+  color: #c2410c;
+}
+
+@media (max-width: 960px) {
+  .plan-amounts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

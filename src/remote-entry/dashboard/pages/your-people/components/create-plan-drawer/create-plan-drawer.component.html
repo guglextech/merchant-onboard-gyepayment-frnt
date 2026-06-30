@@ -1,0 +1,184 @@
+<app-side-drawer
+  [isOpen]="isOpen()"
+  title="Create Payment Plan"
+  [subtitle]="subtitle()"
+  width="520px"
+  (closed)="close()"
+>
+  <form [formGroup]="form" drawer-body (ngSubmit)="submit()">
+    @if (submitError) {
+      <div class="alert alert-danger d-flex align-items-center gap-2 mb-3 py-2 px-3 form-alert">
+        {{ submitError }}
+      </div>
+    }
+
+    @if (customer(); as selectedCustomer) {
+      <div class="plan-customer-card">
+        <span class="plan-customer-card__label">Customer</span>
+        <strong>{{ selectedCustomer.fullName }}</strong>
+        <span class="plan-customer-card__meta">{{ formatPhone(selectedCustomer.phone) }}</span>
+      </div>
+    }
+
+    <h3 class="sub-title">Plan Details</h3>
+
+    <div class="row g-3 mb-1">
+      <div class="col-12">
+        <label for="planDescription" class="form-label">
+          Description <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planDescription"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.description.invalid && form.controls.description.touched"
+          formControlName="description"
+          placeholder="e.g. Group contribution"
+        />
+        @if (fieldError('description')) {
+          <div class="invalid-feedback">{{ fieldError('description') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="planTotalAmount" class="form-label">
+          Total Amount (GHS) <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planTotalAmount"
+          type="number"
+          step="0.01"
+          min="0.01"
+          class="form-control"
+          [class.is-invalid]="form.controls.totalAmount.invalid && form.controls.totalAmount.touched"
+          formControlName="totalAmount"
+          placeholder="0.50"
+        />
+        @if (fieldError('totalAmount')) {
+          <div class="invalid-feedback">{{ fieldError('totalAmount') }}</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="planDownPayment" class="form-label">
+          Down Payment (GHS) <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planDownPayment"
+          type="number"
+          step="0.01"
+          min="0"
+          class="form-control"
+          [class.is-invalid]="form.controls.downPayment.invalid && form.controls.downPayment.touched"
+          formControlName="downPayment"
+          placeholder="0.10"
+        />
+        @if (fieldError('downPayment')) {
+          <div class="invalid-feedback">{{ fieldError('downPayment') }}</div>
+        } @else {
+          <div class="form-text">Must not exceed the total amount.</div>
+        }
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="sub-title">Schedule</h3>
+
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="planInstallmentCount" class="form-label">
+          Installments <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planInstallmentCount"
+          type="number"
+          min="1"
+          class="form-control"
+          [class.is-invalid]="form.controls.installmentCount.invalid && form.controls.installmentCount.touched"
+          formControlName="installmentCount"
+          placeholder="6"
+        />
+        @if (fieldError('installmentCount')) {
+          <div class="invalid-feedback">{{ fieldError('installmentCount') }}</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="planFrequency" class="form-label">
+          Frequency <span class="text-danger">*</span>
+        </label>
+        <select
+          id="planFrequency"
+          class="form-select"
+          [class.is-invalid]="form.controls.frequency.invalid && form.controls.frequency.touched"
+          formControlName="frequency"
+        >
+          @for (frequency of frequencyOptions; track frequency) {
+            <option [value]="frequency">{{ frequency }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label for="planStartDate" class="form-label">
+          Start Date <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planStartDate"
+          type="date"
+          class="form-control"
+          [class.is-invalid]="form.controls.startDate.invalid && form.controls.startDate.touched"
+          formControlName="startDate"
+        />
+        @if (fieldError('startDate')) {
+          <div class="invalid-feedback">{{ fieldError('startDate') }}</div>
+        }
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="sub-title">Linked Account</h3>
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="planMandateId" class="form-label">
+          Mandate ID <span class="text-danger">*</span>
+        </label>
+        <input
+          id="planMandateId"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.controls.mandateId.invalid && form.controls.mandateId.touched"
+          formControlName="mandateId"
+          placeholder="MANDATE_UUID"
+        />
+        @if (fieldError('mandateId')) {
+          <div class="invalid-feedback">{{ fieldError('mandateId') }}</div>
+        } @else if (customer() && !customer()?.activeMandateId) {
+          <div class="form-text text-warning">No active mandate on file — enter the mandate UUID manually.</div>
+        } @else {
+          <div class="form-text">Active mobile-money mandate linked to this customer.</div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label for="planCustomerId" class="form-label">Customer ID</label>
+        <input id="planCustomerId" type="text" class="form-control" formControlName="customerId" readonly />
+      </div>
+    </div>
+  </form>
+
+  <div drawer-footer class="drawer-actions">
+    <button type="button" class="btn-ghost" (click)="close()" [disabled]="submitting">Cancel</button>
+    <button type="button" class="btn-primary" (click)="submit()" [disabled]="submitting">
+      @if (submitting) {
+        <span class="spinner"></span>
+        Creating...
+      } @else {
+        Create Plan
+      }
+    </button>
+  </div>
+</app-side-drawer>
