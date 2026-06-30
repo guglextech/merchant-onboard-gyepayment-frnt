@@ -63,7 +63,7 @@ export class AdminAuthenticationService extends BaseApiService {
   }
 
   isAuthenticated(): boolean {
-    return this.getSession() !== null;
+    return Boolean(this.getAccessToken());
   }
 
   getAccessToken(): string | null {
@@ -71,9 +71,12 @@ export class AdminAuthenticationService extends BaseApiService {
   }
 
   private async toSession(response: LoginResponseModel): Promise<AuthSessionModel> {
-    const tokens = await this.withTokenHashes(response.tokens);
+    const tokens = await this.withTokenHashes({
+      accessToken: response.accessToken,
+    });
+
     return {
-      merchant: response.merchant,
+      admin: response.admin,
       tokens,
       loggedInAt: new Date().toISOString(),
     };
@@ -85,10 +88,10 @@ export class AdminAuthenticationService extends BaseApiService {
   }
 
   private async withTokenHashes(tokens: AuthTokensModel): Promise<AuthTokensModel> {
-    const [accessTokenHash, refreshTokenHash] = await Promise.all([
-      this.hashToken(tokens.accessToken),
-      this.hashToken(tokens.refreshToken),
-    ]);
+    const accessTokenHash = await this.hashToken(tokens.accessToken);
+    const refreshTokenHash = tokens.refreshToken
+      ? await this.hashToken(tokens.refreshToken)
+      : undefined;
 
     return { ...tokens, accessTokenHash, refreshTokenHash };
   }

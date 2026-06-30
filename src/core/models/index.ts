@@ -1,4 +1,5 @@
 export type {
+  AdminModel,
   AuthSessionModel,
   AuthTokensModel,
   ChangePasswordPayload,
@@ -8,7 +9,7 @@ export type {
   MessageResponse,
 } from './admin-authentication.model';
 
-export type { AuthMerchant, AuthSession } from './auth-session.model';
+export type { AuthAdmin, AuthMerchant, AuthSession } from './auth-session.model';
 
 export type {
   CollectionRecord,

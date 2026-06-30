@@ -31,11 +31,14 @@ export class DashboardShellComponent {
     icon,
   }));
   readonly pageTitle = signal('Overview');
-  readonly merchantName = computed(
-    () => this.authService.getSession()?.merchant.businessName ?? 'Merchant'
+  readonly userName = computed(
+    () =>
+      this.authService.getSession()?.admin.username ??
+      this.authService.getSession()?.admin.email ??
+      'Admin'
   );
-  readonly merchantEmail = computed(
-    () => this.authService.getSession()?.merchant.email ?? ''
+  readonly userEmail = computed(
+    () => this.authService.getSession()?.admin.email ?? ''
   );
 
   constructor() {

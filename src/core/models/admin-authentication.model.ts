@@ -1,3 +1,10 @@
+export interface AdminModel {
+  id: string;
+  email: string;
+  username: string;
+}
+
+/** @deprecated Merchant session fields — use AdminModel for admin auth */
 export interface MerchantModel {
   id: string;
   email: string;
@@ -8,19 +15,19 @@ export interface MerchantModel {
 
 export interface AuthTokensModel {
   accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
+  refreshToken?: string;
+  expiresIn?: number;
   accessTokenHash?: string;
   refreshTokenHash?: string;
 }
 
 export interface LoginResponseModel {
-  merchant: MerchantModel;
-  tokens: AuthTokensModel;
+  accessToken: string;
+  admin: AdminModel;
 }
 
 export interface AuthSessionModel {
-  merchant: MerchantModel;
+  admin: AdminModel;
   tokens: AuthTokensModel;
   loggedInAt: string;
 }

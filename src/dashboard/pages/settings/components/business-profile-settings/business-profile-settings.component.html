@@ -1,56 +1,37 @@
 <section class="settings-panel">
-  <h2 class="panel-title">Business Profile</h2>
-  <p class="panel-sub">Your merchant identity from the active session.</p>
+  <h2 class="panel-title">Admin Profile</h2>
+  <p class="panel-sub">Your admin identity from the active session.</p>
 
   <div class="row g-3 mb-1">
     <div class="col-md-6">
-      <label for="s-business-name" class="form-label">Business name</label>
+      <label for="s-username" class="form-label">Username</label>
       <input
-        id="s-business-name"
+        id="s-username"
         type="text"
         class="form-control"
-        [value]="merchant?.businessName ?? ''"
+        [value]="admin?.username ?? ''"
         readonly
       />
     </div>
     <div class="col-md-6">
-      <label for="s-merchant-code" class="form-label">Merchant code</label>
-      <input
-        id="s-merchant-code"
-        type="text"
-        class="form-control"
-        [value]="merchant?.merchantCode ?? ''"
-        readonly
-      />
-      <div class="form-text">Assigned by GYE Payment — cannot be changed.</div>
-    </div>
-    <div class="col-md-6">
-      <label for="s-contact-email" class="form-label">Contact email</label>
+      <label for="s-contact-email" class="form-label">Email</label>
       <input
         id="s-contact-email"
         type="email"
         class="form-control"
-        [value]="merchant?.email ?? ''"
+        [value]="admin?.email ?? ''"
         readonly
       />
     </div>
     <div class="col-md-6">
-      <label for="s-merchant-id" class="form-label">Merchant ID</label>
+      <label for="s-admin-id" class="form-label">Admin ID</label>
       <input
-        id="s-merchant-id"
+        id="s-admin-id"
         type="text"
         class="form-control"
-        [value]="merchant?.id ?? ''"
+        [value]="admin?.id ?? ''"
         readonly
       />
     </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <h3 class="sub-title">Status</h3>
-  <div class="status-row">
-    <span class="status-badge status-badge--active">{{ merchant?.status ?? 'UNKNOWN' }}</span>
-    <span class="status-text">Account status from your current session.</span>
   </div>
 </section>

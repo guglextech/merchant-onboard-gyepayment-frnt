@@ -1,7 +1,7 @@
 import { AUTH_SESSION_STORAGE_KEY } from '../api/api.constants';
 import { AuthSession } from '../models/auth-session.model';
 
-export type { AuthMerchant, AuthSession } from '../models/auth-session.model';
+export type { AuthAdmin, AuthMerchant, AuthSession } from '../models/auth-session.model';
 
 export function readAuthSession(): AuthSession | null {
   if (typeof localStorage === 'undefined' && typeof sessionStorage === 'undefined') {

@@ -1,10 +1,12 @@
-import { MerchantModel } from './admin-authentication.model';
+import { AdminModel } from './admin-authentication.model';
 
 export interface AuthSession {
-  merchant?: MerchantModel;
+  admin?: AdminModel;
   tokens?: { accessToken?: string };
   loggedInAt?: string;
 }
 
-/** @deprecated Use MerchantModel from admin-authentication.model */
-export type AuthMerchant = MerchantModel;
+export type AuthAdmin = AdminModel;
+
+/** @deprecated Use AuthAdmin */
+export type AuthMerchant = AdminModel;

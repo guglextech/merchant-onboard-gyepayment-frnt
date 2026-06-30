@@ -7,6 +7,7 @@ export { MerchantsService } from './merchants.service';
 export { SystemControlService } from './system-control.service';
 
 export type {
+  AdminModel,
   AuthSessionModel,
   AuthTokensModel,
   ChangePasswordPayload,
@@ -16,7 +17,7 @@ export type {
   MessageResponse,
 } from '../models/admin-authentication.model';
 
-export type { AuthMerchant, AuthSession } from '../models/auth-session.model';
+export type { AuthAdmin, AuthMerchant, AuthSession } from '../models/auth-session.model';
 
 export type { CollectionRecord, CollectionStatus } from '../models/collections-oversight.model';
 

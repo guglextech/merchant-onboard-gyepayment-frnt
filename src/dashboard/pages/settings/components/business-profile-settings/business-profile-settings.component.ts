@@ -7,5 +7,5 @@ import { readAuthSession } from '../../../../utils/auth-session.util';
   styleUrl: './business-profile-settings.component.scss',
 })
 export class BusinessProfileSettingsComponent {
-  readonly merchant = readAuthSession()?.merchant ?? null;
+  readonly admin = readAuthSession()?.admin ?? null;
 }
