@@ -25,14 +25,14 @@ export const MERCHANT_TABLE_COLUMNS: DataTableColumn<MerchantRecord>[] = [
     formatter: (value) => formatPhone(String(value ?? '')),
   },
   { key: 'city', label: 'City', sortable: true },
-  {
-    key: 'availableBalance',
-    label: 'Balance',
-    sortable: true,
-    align: 'end',
-    valueAccessor: (row) => Number(row.availableBalance),
-    formatter: (value) => formatMoney(Number(value ?? 0)),
-  },
+  // {
+  //   key: 'availableBalance',
+  //   label: 'Balance',
+  //   sortable: true,
+  //   align: 'end',
+  //   valueAccessor: (row) => Number(row.availableBalance),
+  //   formatter: (value) => formatMoney(Number(value ?? 0)),
+  // },
   {
     key: 'status',
     label: 'Status',

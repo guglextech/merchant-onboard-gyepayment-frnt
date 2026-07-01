@@ -24,12 +24,12 @@ export const KYB_TABLE_COLUMNS: DataTableColumn<PendingKybApplication>[] = [
     sortable: true,
     formatter: (value) => formatPhone(String(value ?? '')),
   },
-  {
-    key: 'ghanaCardNumber',
-    label: 'Ghana Card',
-    sortable: true,
-    formatter: (value) => (value ? String(value) : '—'),
-  },
+  // {
+  //   key: 'ghanaCardNumber',
+  //   label: 'Ghana Card',
+  //   sortable: true,
+  //   formatter: (value) => (value ? String(value) : '—'),
+  // },
   {
     key: 'tinNumber',
     label: 'TIN',
